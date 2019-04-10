@@ -2,7 +2,7 @@ namespace CustomerReviewsModule.Data.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CustomerReviewsModule.Data.Repositories.CustomerReviewRepository>
+    public sealed class Configuration : DbMigrationsConfiguration<CustomerReviewsModule.Data.Repositories.CustomerReviewRepository>
     {
         public Configuration()
         {

@@ -116,6 +116,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Localizations\en.customerReviews.json" />
     <None Include="module.ignore" />
     <None Include="packages.config" />
     <None Include="Content\help\index.html" />
@@ -133,10 +134,12 @@
   <ItemGroup>
     <Content Include="module.manifest" />
     <Content Include="Content\css\CustomerReviewsModule.Web.css" />
-    <Content Include="Scripts\blades\helloWorld_blade1.js" />
-    <Content Include="Scripts\blades\helloWorld_blade1.tpl.html" />
+    <Content Include="Scripts\blades\reviews-list.js" />
+    <Content Include="Scripts\blades\reviews-list.tpl.html" />
     <Content Include="Scripts\CustomerReviewsModule.Web.js" />
     <Content Include="Scripts\resources\CustomerReviewsModule.WebApi.js" />
+    <Content Include="Scripts\widgets\customerReviewWidget.js" />
+    <Content Include="Scripts\widgets\customerReviewWidget.tpl.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Api\CustomerReviewsModule.WebController.cs" />

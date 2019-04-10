@@ -2,6 +2,7 @@ using System.Data.Entity;
 using System.Linq;
 using CustomerReviewsModule.Core.Model;
 using VirtoCommerce.Platform.Data.Infrastructure;
+using VirtoCommerce.Platform.Data.Infrastructure.Interceptors;
 
 namespace CustomerReviewsModule.Data.Repositories
 {
@@ -18,8 +19,8 @@ namespace CustomerReviewsModule.Data.Repositories
 
         }
 
-        public CustomerReviewRepository(string nameOrConnectionString)
-            : base(nameOrConnectionString, null, null)
+        public CustomerReviewRepository(string nameOrConnectionString, params IInterceptor[] interceptors)
+            : base(nameOrConnectionString, null, interceptors)
         {
             Configuration.LazyLoadingEnabled = false;
         }

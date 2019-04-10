@@ -1,7 +1,7 @@
 //Call this to register our module to main application
 var moduleTemplateName = "CustomerReviewsModule.Web";
 
-if (AppDependencies != undefined) {
+if (AppDependencies !== undefined) {
     AppDependencies.push(moduleTemplateName);
 }
 
@@ -15,9 +15,9 @@ angular.module(moduleTemplateName, [])
                 controller: [
                     '$scope', 'platformWebApp.bladeNavigationService', function ($scope, bladeNavigationService) {
                         var newBlade = {
-                            id: 'blade1',
-                            controller: 'CustomerReviewsModule.Web.blade1Controller',
-                            template: 'Modules/$(CustomerReviewsModule.Web)/Scripts/blades/helloWorld_blade1.tpl.html',
+                            id: 'customerReviews',
+                            controller: 'CustomerReviewsModule.Web.reviewsListController',
+                            template: 'Modules/$(CustomerReviewsModule.Web)/Scripts/blades/reviews-list.tpl.html',
                             isClosingDisabled: true
                         };
                         bladeNavigationService.showBlade(newBlade);
