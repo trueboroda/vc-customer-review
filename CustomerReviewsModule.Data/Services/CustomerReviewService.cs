@@ -30,8 +30,8 @@ namespace CustomerReviewsModule.Data.Services
             using (var repository = _repositoryFactory())
             {
                 var entities = repository.GetByIds(ids);
-                var mapper = Mapping.MapperProvider.GetInstance();
-                var models = mapper.Map<CustomerReview[]>(entities);
+
+                var models = entities.Select(x => x.ToModel(AbstractTypeFactory<CustomerReview>.TryCreateInstance())).ToArray();
                 return models;
             }
         }
@@ -44,7 +44,6 @@ namespace CustomerReviewsModule.Data.Services
             }
 
             var pkMap = new PrimaryKeyResolvingMap();
-            var mapper = Mapping.MapperProvider.GetInstance();
 
             using (var repository = _repositoryFactory())
             using (var changeTracker = GetChangeTracker(repository))
@@ -53,20 +52,18 @@ namespace CustomerReviewsModule.Data.Services
                 var alreadyExistEntities = repository.GetByIds(items.Where(m => !m.IsTransient()).Select(x => x.Id).ToArray());
                 foreach (var model in items)
                 {
-                    var sourceEntity = AbstractTypeFactory<CustomerReviewEntity>.TryCreateInstance();
+                    var sourceEntity = AbstractTypeFactory<CustomerReviewEntity>
+                        .TryCreateInstance()
+                        .FromModel(model, pkMap);
 
-                    pkMap.AddPair(model, sourceEntity);//strange thing
-                    sourceEntity = mapper.Map<CustomerReviewEntity>(model);
+                    //pkMap.AddPair(model, sourceEntity);//strange thing
+                    //sourceEntity = mapper.Map<CustomerReviewEntity>(model);
 
                     var targetEntity = alreadyExistEntities.FirstOrDefault(x => x.Id == sourceEntity.Id);
                     if (targetEntity != null)
                     {
                         changeTracker.Attach(targetEntity);
-                        sourceEntity.Update(targetEntity);
-
-
-
-
+                        sourceEntity.Patch(targetEntity);
                     }
                     else
                     {
