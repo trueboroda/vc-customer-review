@@ -1,5 +1,5 @@
-angular.module('CustomerReviewsModule.Web')
-    .controller('CustomerReviewsModule.Web.customerReviewWidgetController', ['$scope', 'CustomerReviewsModule.WebApi', 'platformWebApp.bladeNavigationService', function ($scope, reviewsApi, bladeNavigationService) {
+angular.module('CustomerReviewsModule')
+    .controller('CustomerReviewsModule.customerReviewWidgetController', ['$scope', 'CustomerReviewsModuleApi', 'platformWebApp.bladeNavigationService', function ($scope, reviewsApi, bladeNavigationService) {
         var blade = $scope.blade;
         var filter = { take: 0 };
 
@@ -19,8 +19,8 @@ angular.module('CustomerReviewsModule.Web')
                 id: "reviewsList",
                 filter: filter,
                 title: 'Customer reviews for "' + blade.title + '"',
-                controller: 'CustomerReviewsModule.Web.reviewsListController',
-                template: 'Modules/$(CustomerReviewsModule.Web)/Scripts/blades/reviews-list.tpl.html'
+                controller: 'CustomerReviewsModule.reviewsListController',
+                template: 'Modules/$(CustomerReviewsModule)/Scripts/blades/reviews-list.tpl.html'
             };
             bladeNavigationService.showBlade(newBlade, blade);
         };
@@ -46,8 +46,8 @@ angular.module('CustomerReviewsModule.Web')
             mainMenuService.addMenuItem(menuItem);
             //Register reviews widget inside product blade
             var itemReviewsWidget = {
-                controller: 'CustomerReviewsModule.Web.customerReviewWidgetController',
-                template: 'Modules/$(CustomerReviewsModule.Web)/Scripts/widgets/customerReviewWidget.tpl.html'
+                controller: 'CustomerReviewsModule.customerReviewWidgetController',
+                template: 'Modules/$(CustomerReviewsModule)/Scripts/widgets/customerReviewWidget.tpl.html'
             };
             widgetService.registerWidget(itemReviewsWidget, 'itemDetail');
         }

@@ -1,5 +1,5 @@
-angular.module('CustomerReviewsModule.Web')
-.factory('CustomerReviewsModule.WebApi', ['$resource', function ($resource) {
+angular.module('CustomerReviewsModule')
+.factory('CustomerReviewsModuleApi', ['$resource', function ($resource) {
     return $resource('api/customerReviews', {}, {
 
         search: { method: 'POST', url: 'api/customerReviews/search' },

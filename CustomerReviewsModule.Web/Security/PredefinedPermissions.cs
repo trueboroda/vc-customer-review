@@ -4,11 +4,11 @@ namespace CustomerReviewsModule.Web.Security
 
     {
 
-        public const string CustomerReviewRead = "customerReview:read",
+        public const string CustomerReviewRead = "customerReview:read";
 
-                CustomerReviewUpdate = "customerReview:update",
+        public const string CustomerReviewUpdate = "customerReview:update";
 
-                CustomerReviewDelete = "customerReview:delete";
+        public const string CustomerReviewDelete = "customerReview:delete";
 
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <module>
-  <id>CustomerReviewsModule.Web</id>
+  <id>CustomerReviewsModule</id>
   <version>1.0.0</version>
   <platformVersion>2.13.9</platformVersion>
 
-  <title>CustomerReviewsModule.Web</title>
+  <title>CustomerReviewsModule</title>
   <description>Mudule for addition a customer reviews functionality.</description>
   <authors>
     <author>Anton Veretennikov</author>
@@ -23,63 +23,14 @@
        
 
   <settings>
-    <group name="General">
+    <group name="Store|General">
       <setting>
-        <name>CustomerReviewsModule.Web.General.String</name>
-        <valueType>string</valueType>
-        <defaultValue>qwerty</defaultValue>
-        <title>String</title>
-        <description>A text setting</description>
-      </setting>
-      <setting>
-        <name>CustomerReviewsModule.Web.General.Password</name>
-        <valueType>secureString</valueType>
-        <defaultValue>qwerty</defaultValue>
-        <title>Password</title>
-        <description>A secure text setting</description>
-      </setting>
-      <setting>
-        <name>CustomerReviewsModule.Web.General.Integer</name>
-        <valueType>integer</valueType>
-        <defaultValue>123</defaultValue>
-        <title>Integer</title>
-        <description>An integer setting</description>
-      </setting>
-      <setting>
-        <name>CustomerReviewsModule.Web.General.Decimal</name>
-        <valueType>decimal</valueType>
-        <defaultValue>123.45</defaultValue>
-        <title>Decimal</title>
-        <description>A decimal setting</description>
-      </setting>
-    </group>
-    <group name="Advanced">
-      <setting>
-        <name>CustomerReviewsModule.Web.Advanced.Boolean1</name>
-        <valueType>boolean</valueType>
-        <defaultValue>true</defaultValue>
-        <title>Boolean1</title>
-        <description>A boolean setting</description>
-      </setting>
-      <setting>
-        <name>CustomerReviewsModule.Web.Advanced.Boolean2</name>
+        <name>CustomerReviewsModule.CustomerReviewsEnabled</name>
         <valueType>boolean</valueType>
         <defaultValue>false</defaultValue>
-        <title>Boolean2</title>
-        <description>A boolean setting</description>
-      </setting>
-      <setting>
-        <name>CustomerReviewsModule.Web.Advanced.Select</name>
-        <valueType>string</valueType>
-        <allowedValues>
-          <value>qwerty</value>
-          <value>asdfgh</value>
-          <value>zxcvb</value>
-        </allowedValues>
-        <defaultValue>asdfgh</defaultValue>
-        <title>Select</title>
-        <description>Select one of the allowed values</description>
-      </setting>
+        <title>Customer reviews enable</title>
+        <description>Switch for enabling customer reviews for store.</description>
+      </setting>      
     </group>
   </settings>
 

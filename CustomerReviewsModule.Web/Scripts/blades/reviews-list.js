@@ -1,5 +1,5 @@
-angular.module('CustomerReviewsModule.Web')
-    .controller('CustomerReviewsModule.Web.reviewsListController', ['$scope', 'CustomerReviewsModule.WebApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper',
+angular.module('CustomerReviewsModule')
+    .controller('CustomerReviewsModule.reviewsListController', ['$scope', 'CustomerReviewsModuleApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper',
         function ($scope, reviewsApi, bladeUtils, uiGridConstants, uiGridHelper) {
             $scope.uiGridConstants = uiGridConstants;
 
