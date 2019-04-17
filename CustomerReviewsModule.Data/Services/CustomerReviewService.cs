@@ -17,6 +17,65 @@ namespace CustomerReviewsModule.Data.Services
             _repositoryFactory = repositoryFactory;
         }
 
+        public void ActivateCustomerReview(string id)
+        {
+            using (var repository = _repositoryFactory())
+            {
+                var review = repository.GetById(id);
+                if (review != null)
+                {
+                    review.IsActive = true;
+                    repository.Update(review);
+                    CommitChanges(repository);
+                }
+            }
+        }
+
+        public void DeactivateCustomerReview(string id)
+        {
+            using (var repository = _repositoryFactory())
+            {
+                var review = repository.GetById(id);
+                if (review != null)
+                {
+                    review.IsActive = false;
+
+                    repository.Update(review);
+                    CommitChanges(repository);
+                }
+            }
+        }
+
+        public void LikeCustomerReview(string reviewId, string customerId)
+        {
+            using (var repository = _repositoryFactory())
+            {
+                var review = repository.GetById(reviewId);
+                if (review != null)
+                {
+                    review.LikeCount = review.DislikeCount + 1;
+                    repository.Update(review);
+                    CommitChanges(repository);
+                }
+            }
+        }
+
+
+        public void DislikeCustomerReview(string reviewId, string customerId)
+        {
+            using (var repository = _repositoryFactory())
+            {
+                var item = repository.GetById(reviewId);
+                if (item != null)
+                {
+                    item.LikeCount = item.DislikeCount + 1;
+                    repository.Update(item);
+                    CommitChanges(repository);
+                }
+            }
+        }
+
+
         public void DeleteCustomerReviews(string[] ids)
         {
             using (var repository = _repositoryFactory())
@@ -35,6 +94,7 @@ namespace CustomerReviewsModule.Data.Services
                 return models;
             }
         }
+
 
         public void SaveCustomerReviews(CustomerReview[] items)
         {
@@ -77,5 +137,6 @@ namespace CustomerReviewsModule.Data.Services
 
             }
         }
+
     }
 }

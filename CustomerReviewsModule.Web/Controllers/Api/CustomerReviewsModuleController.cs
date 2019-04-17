@@ -78,5 +78,50 @@ namespace CustomerReviewsModule.Web.Controllers.Api
             _customerReviewService.DeleteCustomerReviews(ids);
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+
+        [HttpGet]
+        [Route("activate")]
+        [ResponseType(typeof(void))]
+        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
+        public IHttpActionResult Activate([FromUri]string id)
+        {
+            _customerReviewService.ActivateCustomerReview(id);
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
+        [HttpGet]
+        [Route("deactivate")]
+        [ResponseType(typeof(void))]
+        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
+        public IHttpActionResult Deactivate()
+        {
+            _customerReviewService.DeactivateCustomerReview(id);
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        [Route("like")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult Like(string reviewId, string customerId)
+        {
+            _customerReviewService.LikeCustomerReview(reviewId, customerId);
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        [Route("dislike")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult Dislike(string reviewId, string customerId)
+        {
+            _customerReviewService.DislikeCustomerReview(reviewId, customerId);
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
     }
 }

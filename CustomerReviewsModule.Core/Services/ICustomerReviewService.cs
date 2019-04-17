@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CustomerReviewsModule.Core.Model;
 
 namespace CustomerReviewsModule.Core.Services
@@ -13,13 +8,19 @@ namespace CustomerReviewsModule.Core.Services
 
         CustomerReview[] GetByIds(string[] ids);
 
-
-
         void SaveCustomerReviews(CustomerReview[] items);
 
-
-
         void DeleteCustomerReviews(string[] ids);
+
+
+        void ActivateCustomerReview(string id);
+
+        void DeactivateCustomerReview(string id);
+
+        void LikeCustomerReview(string reviewId, string customerId);
+
+        void DislikeCustomerReview(string reviewId, string customerId);
+
 
     }
 }

@@ -22,6 +22,16 @@ namespace CustomerReviewsModule.Core.Model
         [Required]
         public string ProductId { get; set; }
 
+        [Range(1, 5)]
+        public int Rating { get; set; }
+
+        public int LikeCount { get; set; }
+        public int DislikeCount { get; set; }
+
+
+        [NotMapped]
+        public int LikeDislikeDiff => LikeCount - DislikeCount;
+
 
         public virtual CustomerReview ToModel(CustomerReview customerReview)
         {
@@ -38,6 +48,12 @@ namespace CustomerReviewsModule.Core.Model
             customerReview.Content = Content;
             customerReview.IsActive = IsActive;
             customerReview.ProductId = ProductId;
+            customerReview.Rating = Rating;
+            customerReview.LikeCount = LikeCount;
+            customerReview.DislikeCount = DislikeCount;
+            customerReview.LikeDislikeDiff = LikeDislikeDiff;
+
+
 
             return customerReview;
         }
@@ -59,6 +75,9 @@ namespace CustomerReviewsModule.Core.Model
             Content = customerReview.Content;
             IsActive = customerReview.IsActive;
             ProductId = customerReview.ProductId;
+            customerReview.Rating = Rating;
+            customerReview.LikeCount = LikeCount;
+            customerReview.DislikeCount = DislikeCount;
 
             return this;
         }

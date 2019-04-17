@@ -11,11 +11,13 @@ namespace CustomerReviewsModule.Data.Repositories
 
         IQueryable<CustomerReviewEntity> CustomerReviews { get; }
 
-
-
         CustomerReviewEntity[] GetByIds(string[] ids);
 
         void DeleteCustomerReviews(string[] ids);
 
+
+        CustomerReviewEntity GetById(string id);
+
+        void DeleteCustomerReview(string id);
     }
 }
