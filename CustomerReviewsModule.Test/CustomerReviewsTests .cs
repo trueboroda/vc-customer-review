@@ -41,7 +41,7 @@ namespace CustomerReviewsModule.Test
                 Content = "Liked that"
             };
 
-            CustomerReviewService.UpdateCustomerReview(new[] { item });
+            CustomerReviewService.UpdateCustomerReviews(new[] { item });
 
             getByIdsResult = CustomerReviewService.GetByIds(new[] { CustomerReviewId });
             Assert.Single(getByIdsResult);
@@ -54,7 +54,7 @@ namespace CustomerReviewsModule.Test
             Assert.NotEqual(updatedContent, item.Content);
 
             item.Content = updatedContent;
-            CustomerReviewService.UpdateCustomerReview(new[] { item });
+            CustomerReviewService.UpdateCustomerReviews(new[] { item });
             getByIdsResult = CustomerReviewService.GetByIds(new[] { CustomerReviewId });
             Assert.Single(getByIdsResult);
 

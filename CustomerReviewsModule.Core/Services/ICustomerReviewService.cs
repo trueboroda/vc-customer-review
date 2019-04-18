@@ -17,7 +17,7 @@ namespace CustomerReviewsModule.Core.Services
 
         CustomerReview CreateCustomerReview(CustomerReview review);
 
-        void UpdateCustomerReview(CustomerReview[] review);
+        void UpdateCustomerReviews(CustomerReview[] review);
 
         void DeleteCustomerReviews(string[] ids);
 

@@ -26,6 +26,7 @@ namespace CustomerReviewsModule.Data.BackgroundJobs
 
         public void Recalculate(string[] productIds)
         {
+
             foreach (var productId in productIds)
             {
                 var reviews = _customerReviewService.GetByProductId(productId);

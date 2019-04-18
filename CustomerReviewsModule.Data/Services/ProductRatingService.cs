@@ -24,6 +24,12 @@ namespace CustomerReviewsModule.Data.Services
 
         public virtual ProductRating GetProductRating(string productId)
         {
+
+            if (productId == null)
+            {
+                throw new ArgumentNullException(nameof(productId));
+            }
+
             using (var repository = _repositoryFactory())
             {
                 var entity = repository.ProductRatings.FirstOrDefault(x => x.ProductId == productId);
@@ -49,11 +55,22 @@ namespace CustomerReviewsModule.Data.Services
         /// <param name="productIds"></param>
         public virtual void RecalculateProductRating(string[] productIds)
         {
+            if (productIds == null)
+            {
+                throw new ArgumentNullException(nameof(productIds));
+            }
+
             BackgroundJob.Enqueue<RecalculateProductsRatingsJob>(x => x.Recalculate(productIds));
         }
 
         public virtual void SaveProductRating(ProductRating productRating)
         {
+
+            if (productRating == null)
+            {
+                throw new ArgumentNullException(nameof(productRating));
+            }
+
             using (var repository = _repositoryFactory())
             using (var changeTracker = base.GetChangeTracker(repository))
             {

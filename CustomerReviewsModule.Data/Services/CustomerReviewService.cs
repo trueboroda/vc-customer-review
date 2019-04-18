@@ -26,6 +26,11 @@ namespace CustomerReviewsModule.Data.Services
 
         public virtual void DeleteCustomerReviews(string[] ids)
         {
+            if (ids == null)
+            {
+                throw new ArgumentNullException(nameof(ids));
+            }
+
             using (var repository = _repositoryFactory())
             {
                 //repository.DeleteCustomerReviews(ids);
@@ -50,6 +55,10 @@ namespace CustomerReviewsModule.Data.Services
 
         public virtual CustomerReview[] GetByIds(string[] ids)
         {
+            if (ids == null)
+            {
+                throw new ArgumentNullException(nameof(ids));
+            }
             using (var repository = _repositoryFactory())
             {
                 var entities = repository.GetCustomerReviewsByIds(ids);
@@ -61,6 +70,10 @@ namespace CustomerReviewsModule.Data.Services
 
         public virtual CustomerReview GetById(string id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
             return GetByIds(new[] { id }).FirstOrDefault();
         }
 
@@ -92,7 +105,7 @@ namespace CustomerReviewsModule.Data.Services
         }
 
 
-        public virtual void UpdateCustomerReview(CustomerReview[] reviews)
+        public virtual void UpdateCustomerReviews(CustomerReview[] reviews)
         {
             if (reviews == null)
             {
@@ -137,9 +150,15 @@ namespace CustomerReviewsModule.Data.Services
 
         public virtual CustomerReview[] GetByProductId(string productId)
         {
+            if (productId == null)
+            {
+                throw new ArgumentNullException(nameof(review));
+            }
+
             using (var repository = _repositoryFactory())
             {
-                var result = repository.CustomerReviews.Where(x => x.ProductId == productId).ToArray();
+                var entities = repository.CustomerReviews.Where(x => x.ProductId == productId).ToArray();
+                var result = entities.Select(x => x.ToModel(AbstractTypeFactory<CustomerReview>.TryCreateInstance())).ToArray();
                 return result;
             }
         }

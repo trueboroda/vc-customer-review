@@ -21,6 +21,16 @@ namespace CustomerReviewsModule.Data.Services
 
         public virtual CustomerReviewEvaluation GetCustomerReviewEvaluationForCustomer(string reviewId, string customerId)
         {
+            if (reviewId == null)
+            {
+                throw new ArgumentNullException(nameof(reviewId));
+            }
+
+            if (customerId == null)
+            {
+                throw new ArgumentNullException(nameof(customerId));
+            }
+
             using (var repository = _repositoryFactory())
             {
                 var entity = repository.CustomerReviewEvaluations
@@ -36,6 +46,12 @@ namespace CustomerReviewsModule.Data.Services
 
         public virtual void SaveEvaluation(CustomerReviewEvaluation evaluation)
         {
+
+            if (evaluation == null)
+            {
+                throw new ArgumentNullException(nameof(evaluation));
+            }
+
             using (var repository = _repositoryFactory())
             using (var changeTracker = base.GetChangeTracker(repository))
             {

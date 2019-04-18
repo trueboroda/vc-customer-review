@@ -79,9 +79,9 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [Route("")]
         [ResponseType(typeof(void))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
-        public IHttpActionResult Update(CustomerReview customerReview)
+        public IHttpActionResult Update(CustomerReview[] customerReviews)
         {
-            _customerReviewService.UpdateCustomerReviews(customerReview);
+            _customerReviewService.UpdateCustomerReviews(customerReviews);
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -96,9 +96,9 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [Route("")]
         [ResponseType(typeof(void))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewDelete)]
-        public IHttpActionResult Delete([FromUri] string id)
+        public IHttpActionResult Delete([FromUri] string[] ids)
         {
-            _customerReviewService.DeleteCustomerReviews(id);
+            _customerReviewService.DeleteCustomerReviews(ids);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
