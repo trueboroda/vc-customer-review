@@ -38,6 +38,7 @@
   <permissions>
      <group name ="Customer Reviews">
                   <permission id ="customerReview:read" name="Read Customer Reviews"/>
+                  <permission id ="customerReview:create" name="Create Customer Review"/>
                   <permission id ="customerReview:update" name="Update Customer Review"/>
                   <permission id ="customerReview:delete" name="Delete Customer Review"/>              
      </group>       

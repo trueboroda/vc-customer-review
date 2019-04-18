@@ -19,7 +19,9 @@ namespace CustomerReviewsModule.Core.Model
         public int LikeCount { get; set; }
         public int DislikeCount { get; set; }
 
-        public int LikeDislikeDiff { get; set; }
+
+
+        //public ICollection<CustomerReviewEvaluation> Evaluations { get; set; }
 
     }
 }

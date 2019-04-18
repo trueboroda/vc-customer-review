@@ -2,24 +2,22 @@ using CustomerReviewsModule.Core.Model;
 
 namespace CustomerReviewsModule.Core.Services
 {
+    /// <summary>
+    /// service for work with Customer Reviews
+    /// </summary>
     public interface ICustomerReviewService
 
     {
 
         CustomerReview[] GetByIds(string[] ids);
 
-        void SaveCustomerReviews(CustomerReview[] items);
+        CustomerReview GetById(string id);
+
+        CustomerReview CreateCustomerReview(CustomerReview review);
+
+        void UpdateCustomerReview(CustomerReview[] review);
 
         void DeleteCustomerReviews(string[] ids);
-
-
-        void ActivateCustomerReview(string id);
-
-        void DeactivateCustomerReview(string id);
-
-        void LikeCustomerReview(string reviewId, string customerId);
-
-        void DislikeCustomerReview(string reviewId, string customerId);
 
 
     }

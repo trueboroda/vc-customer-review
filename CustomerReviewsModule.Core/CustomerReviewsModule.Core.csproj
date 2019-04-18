@@ -51,10 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\CustomerReview.cs" />
-    <Compile Include="Model\CustomerReviewLikeChoice.cs" />
+    <Compile Include="Model\CustomerReviewEvaluation.cs" />
     <Compile Include="Model\CustomerReviewSearchCriteria.cs" />
     <Compile Include="Model\ProductRating.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ICustomerReviewEvaluationService.cs" />
     <Compile Include="Services\IProductRatingCalc.cs" />
     <Compile Include="Services\ICustomerReviewSearchService.cs" />
     <Compile Include="Services\ICustomerReviewService.cs" />

@@ -1,9 +1,11 @@
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CustomerReviewsModule.Core.Model;
 using VirtoCommerce.Platform.Core.Common;
 
-namespace CustomerReviewsModule.Core.Model
+namespace CustomerReviewsModule.Data.Model
 {
     [Table("CustomerReview")]
     public class CustomerReviewEntity : AuditableEntity
@@ -12,7 +14,7 @@ namespace CustomerReviewsModule.Core.Model
         [StringLength(128)]
         public string AuthorNickname { get; set; }
 
-        [StringLength(2048)]
+        [StringLength(1048)]
         [Required]
         public string Content { get; set; }
 
@@ -28,9 +30,9 @@ namespace CustomerReviewsModule.Core.Model
         public int LikeCount { get; set; }
         public int DislikeCount { get; set; }
 
+        public virtual ObservableCollection<CustomerReviewEvaluationEntity> Evaluations { get; set; } = new NullCollection<CustomerReviewEvaluationEntity>();
 
-        [NotMapped]
-        public int LikeDislikeDiff => LikeCount - DislikeCount;
+
 
 
         public virtual CustomerReview ToModel(CustomerReview customerReview)
@@ -51,9 +53,8 @@ namespace CustomerReviewsModule.Core.Model
             customerReview.Rating = Rating;
             customerReview.LikeCount = LikeCount;
             customerReview.DislikeCount = DislikeCount;
-            customerReview.LikeDislikeDiff = LikeDislikeDiff;
 
-
+            //customerReview.Evaluations = Evaluations.Select(x => x.ToModel(AbstractTypeFactory<CustomerReviewEvaluation>.TryCreateInstance())).ToList();
 
             return customerReview;
         }
@@ -76,8 +77,15 @@ namespace CustomerReviewsModule.Core.Model
             IsActive = customerReview.IsActive;
             ProductId = customerReview.ProductId;
             customerReview.Rating = Rating;
-            customerReview.LikeCount = LikeCount;
-            customerReview.DislikeCount = DislikeCount;
+            //customerReview.LikeCount = LikeCount;
+            //customerReview.DislikeCount = DislikeCount;
+
+            //if (customerReview.Evaluations != null)
+            //{
+            //    Evaluations = new ObservableCollection<CustomerReviewEvaluationEntity>(customerReview.Evaluations.Select(x => AbstractTypeFactory<CustomerReviewEvaluationEntity>.TryCreateInstance().FromModel(x)));
+            //}
+
+
 
             return this;
         }
@@ -87,10 +95,14 @@ namespace CustomerReviewsModule.Core.Model
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
 
+            target.ModifiedBy = ModifiedBy;
+            target.ModifiedDate = ModifiedDate;
+
             target.AuthorNickname = AuthorNickname;
             target.Content = Content;
             target.IsActive = IsActive;
             target.ProductId = ProductId;
+            target.Rating = Rating;
         }
 
     }

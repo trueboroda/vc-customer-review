@@ -4,6 +4,6 @@ namespace CustomerReviewsModule.Core.Model
     {
         public string ProductId { get; set; }
 
-        public string Rating { get; set; }
+        public double Rating { get; set; }
     }
 }

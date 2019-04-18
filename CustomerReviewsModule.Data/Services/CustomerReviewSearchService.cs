@@ -33,6 +33,7 @@ namespace CustomerReviewsModule.Data.Services
             using (var repository = _repositoryFactory())
             {
                 var query = repository.CustomerReviews;
+                
 
                 if (!criteria.ProductIds.IsNullOrEmpty())
                 {
@@ -47,6 +48,7 @@ namespace CustomerReviewsModule.Data.Services
                 if (!criteria.SearchPhrase.IsNullOrEmpty())
                 {
                     query = query.Where(x => x.Content.Contains(criteria.SearchPhrase));
+                    
                 }
 
                 var sortInfos = criteria.SortInfos;

@@ -10,16 +10,21 @@ using VirtoCommerce.Platform.Core.Web.Security;
 namespace CustomerReviewsModule.Web.Controllers.Api
 {
     [RoutePrefix("api/CustomerReviews")]
-    public class ManagedModuleController : ApiController
+    public class CustomerReviewsModuleController : ApiController
     {
 
         private readonly ICustomerReviewSearchService _customerReviewSearchService;
         private readonly ICustomerReviewService _customerReviewService;
+        private readonly ICustomerReviewEvaluationService _customerReviewEvaluationService;
+        private readonly IProductRatingService _productRatiingService;
 
-        public ManagedModuleController(ICustomerReviewSearchService customerReviewSearchService, ICustomerReviewService customerReviewService)
+
+        public CustomerReviewsModuleController(ICustomerReviewSearchService customerReviewSearchService, ICustomerReviewService customerReviewService, ICustomerReviewEvaluationService customerReviewEvaluationService, IProductRatingService productRatingService)
         {
             _customerReviewSearchService = customerReviewSearchService;
             _customerReviewService = customerReviewService;
+            _customerReviewEvaluationService = customerReviewEvaluationService;
+            _productRatiingService = productRatingService;
         }
 
 
@@ -43,26 +48,44 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         {
 
             GenericSearchResult<CustomerReview> result = _customerReviewSearchService.SearchCustomerReviews(criteria);
-
             return Ok(result);
 
         }
 
 
         /// <summary>
-        ///  Create new or update existing customer reviews
+        ///  Create new customer review
         /// </summary>
-        /// <param name="customerReviews">Customer reviews</param>
+        /// <param name="customerReviews">Customer review</param>
         /// <returns></returns>
         [HttpPost]
         [Route("")]
+        [ResponseType(typeof(CustomerReview))]
+        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewCreate)]
+        public IHttpActionResult Create(CustomerReview customerReview)
+        {
+            var review = _customerReviewService.CreateCustomerReview(customerReview);
+            return Ok(review);
+        }
+
+
+
+        /// <summary>
+        ///  update existing customer review
+        /// </summary>
+        /// <param name="customerReview">Customer review</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("")]
         [ResponseType(typeof(void))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
-        public IHttpActionResult Update(CustomerReview[] customerReviews)
+        public IHttpActionResult Update(CustomerReview customerReview)
         {
-            _customerReviewService.SaveCustomerReviews(customerReviews);
+            _customerReviewService.UpdateCustomerReviews(customerReview);
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+
 
         /// <summary>
         /// Delete Customer Reviews by IDs
@@ -73,55 +96,48 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [Route("")]
         [ResponseType(typeof(void))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewDelete)]
-        public IHttpActionResult Delete([FromUri] string[] ids)
+        public IHttpActionResult Delete([FromUri] string id)
         {
-            _customerReviewService.DeleteCustomerReviews(ids);
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-
-        [HttpGet]
-        [Route("activate")]
-        [ResponseType(typeof(void))]
-        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
-        public IHttpActionResult Activate([FromUri]string id)
-        {
-            _customerReviewService.ActivateCustomerReview(id);
+            _customerReviewService.DeleteCustomerReviews(id);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
 
         [HttpGet]
-        [Route("deactivate")]
+        [Route("evaluetion")]
         [ResponseType(typeof(void))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
-        public IHttpActionResult Deactivate()
+        public IHttpActionResult GetCustomerReviewEvaluationForCustomer(string reviewId, string customerId)
         {
-            _customerReviewService.DeactivateCustomerReview(id);
-
-            return StatusCode(HttpStatusCode.NoContent);
+            var result = _customerReviewEvaluationService.GetCustomerReviewEvaluationForCustomer(reviewId, customerId);
+            return Ok(result);
         }
+
+
 
         [HttpPost]
-        [Route("like")]
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Like(string reviewId, string customerId)
+        [Route("evaluation")]
+        public IHttpActionResult SaveCustomerReviewEvaluation(CustomerReviewEvaluation evaluation)
         {
-            _customerReviewService.LikeCustomerReview(reviewId, customerId);
+
+            _customerReviewEvaluationService.SaveEvaluation(evaluation);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [HttpPost]
-        [Route("dislike")]
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Dislike(string reviewId, string customerId)
-        {
-            _customerReviewService.DislikeCustomerReview(reviewId, customerId);
 
-            return StatusCode(HttpStatusCode.NoContent);
+        [HttpGet]
+        [Route("productrating")]
+        [ResponseType(typeof(ProductRating))]
+        public IHttpActionResult GetProductRating([FromUri]string productId)
+        {
+            var productRating = _productRatiingService.GetProductRating(productId);
+            return Ok(productRating);
         }
+
+
+
 
     }
 }

@@ -2,85 +2,49 @@ using System;
 using System.Linq;
 using CustomerReviewsModule.Core.Model;
 using CustomerReviewsModule.Core.Services;
+using CustomerReviewsModule.Data.Model;
 using CustomerReviewsModule.Data.Repositories;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace CustomerReviewsModule.Data.Services
 {
+
+
     public class CustomerReviewService : ServiceBase, ICustomerReviewService
     {
         private readonly Func<ICustomerReviewRepository> _repositoryFactory;
 
-        public CustomerReviewService(Func<ICustomerReviewRepository> repositoryFactory)
+        private readonly IProductRatingService _productRatingService;
+
+        public CustomerReviewService(Func<ICustomerReviewRepository> repositoryFactory, IProductRatingService productRatingService)
         {
             _repositoryFactory = repositoryFactory;
         }
 
-        public void ActivateCustomerReview(string id)
+
+
+        public virtual void DeleteCustomerReviews(string[] ids)
         {
             using (var repository = _repositoryFactory())
             {
-                var review = repository.GetById(id);
-                if (review != null)
+                //repository.DeleteCustomerReviews(ids);
+
+
+                var reviews = repository.CustomerReviews.Where(x => ids.Contains(x.Id)).ToList();
+
+                //get distinct products ids of reviews for products ratings recalculation
+                var prodctIds = reviews.Select(x => x.ProductId).Distinct().ToArray();
+
+                foreach (var review in reviews)
                 {
-                    review.IsActive = true;
-                    repository.Update(review);
-                    CommitChanges(repository);
+                    repository.Remove(review);
                 }
-            }
-        }
 
-        public void DeactivateCustomerReview(string id)
-        {
-            using (var repository = _repositoryFactory())
-            {
-                var review = repository.GetById(id);
-                if (review != null)
-                {
-                    review.IsActive = false;
+                CommitChanges(repository);
 
-                    repository.Update(review);
-                    CommitChanges(repository);
-                }
-            }
-        }
-
-        public void LikeCustomerReview(string reviewId, string customerId)
-        {
-            using (var repository = _repositoryFactory())
-            {
-                var review = repository.GetById(reviewId);
-                if (review != null)
-                {
-                    review.LikeCount = review.DislikeCount + 1;
-                    repository.Update(review);
-                    CommitChanges(repository);
-                }
-            }
-        }
-
-
-        public void DislikeCustomerReview(string reviewId, string customerId)
-        {
-            using (var repository = _repositoryFactory())
-            {
-                var item = repository.GetById(reviewId);
-                if (item != null)
-                {
-                    item.LikeCount = item.DislikeCount + 1;
-                    repository.Update(item);
-                    CommitChanges(repository);
-                }
-            }
-        }
-
-
-        public void DeleteCustomerReviews(string[] ids)
-        {
-            using (var repository = _repositoryFactory())
-            {
-                repository.DeleteCustomerReviews(ids);
+                //recalulating products rating
+                _productRatingService.RecalculateProductRating(prodctIds);
             }
         }
 
@@ -88,19 +52,51 @@ namespace CustomerReviewsModule.Data.Services
         {
             using (var repository = _repositoryFactory())
             {
-                var entities = repository.GetByIds(ids);
+                var entities = repository.GetCustomerReviewsByIds(ids);
 
                 var models = entities.Select(x => x.ToModel(AbstractTypeFactory<CustomerReview>.TryCreateInstance())).ToArray();
                 return models;
             }
         }
 
-
-        public void SaveCustomerReviews(CustomerReview[] items)
+        public virtual CustomerReview GetById(string id)
         {
-            if (items == null)
+            return GetByIds(new[] { id }).FirstOrDefault();
+        }
+
+        public virtual CustomerReview CreateCustomerReview(CustomerReview review)
+        {
+            if (review == null)
             {
-                throw new ArgumentNullException(nameof(items));
+                throw new ArgumentNullException(nameof(review));
+            }
+
+            var pkMap = new PrimaryKeyResolvingMap();
+
+            using (var repository = _repositoryFactory())
+            {
+
+                var reviewEntity = AbstractTypeFactory<CustomerReviewEntity>
+                    .TryCreateInstance()
+                    .FromModel(review, pkMap);
+
+                repository.Add(reviewEntity);
+                CommitChanges(repository);
+                pkMap.ResolvePrimaryKeys();
+
+                _productRatingService.RecalculateProductRating(new[] { review.ProductId });
+
+                return reviewEntity.ToModel(review);
+            }
+
+        }
+
+
+        public virtual void UpdateCustomerReview(CustomerReview[] reviews)
+        {
+            if (reviews == null)
+            {
+                throw new ArgumentNullException(nameof(reviews));
             }
 
             var pkMap = new PrimaryKeyResolvingMap();
@@ -109,34 +105,36 @@ namespace CustomerReviewsModule.Data.Services
             using (var changeTracker = GetChangeTracker(repository))
             {
 
-                var alreadyExistEntities = repository.GetByIds(items.Where(m => !m.IsTransient()).Select(x => x.Id).ToArray());
-                foreach (var model in items)
+                var alreadyExistEntities = repository.GetCustomerReviewsByIds(reviews.Where(m => !m.IsTransient()).Select(x => x.Id).ToArray());
+
+
+
+                foreach (var model in reviews)
                 {
                     var sourceEntity = AbstractTypeFactory<CustomerReviewEntity>
                         .TryCreateInstance()
                         .FromModel(model, pkMap);
 
-                    //pkMap.AddPair(model, sourceEntity);//strange thing
-                    //sourceEntity = mapper.Map<CustomerReviewEntity>(model);
 
                     var targetEntity = alreadyExistEntities.FirstOrDefault(x => x.Id == sourceEntity.Id);
                     if (targetEntity != null)
                     {
                         changeTracker.Attach(targetEntity);
                         sourceEntity.Patch(targetEntity);
-                    }
-                    else
-                    {
-                        repository.Add(sourceEntity);
+
                     }
                 }
-
 
                 CommitChanges(repository);
                 pkMap.ResolvePrimaryKeys();
 
+                //recalculate products ratings
+                var productIds = reviews.Select(x => x.ProductId).Distinct().ToArray();
+                _productRatingService.RecalculateProductRating(productIds);
+
             }
         }
+
 
     }
 }

@@ -132,7 +132,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="module.manifest" />
+    <Content Include="module.manifest">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Content\css\CustomerReviewsModule.Web.css" />
     <Content Include="Scripts\blades\reviews-list.js" />
     <Content Include="Scripts\blades\reviews-list.tpl.html" />
@@ -143,8 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Api\CustomerReviewsModuleController.cs" />
-    <Compile Include="Model\CustomerReviewBundle.cs" />
-    <Compile Include="Model\CustomerReviewIdModel.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\PredefinedPermissions.cs" />
