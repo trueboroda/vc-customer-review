@@ -48,7 +48,7 @@ namespace CustomerReviewsModule.Data.Services
             }
         }
 
-        public CustomerReview[] GetByIds(string[] ids)
+        public virtual CustomerReview[] GetByIds(string[] ids)
         {
             using (var repository = _repositoryFactory())
             {
@@ -135,6 +135,13 @@ namespace CustomerReviewsModule.Data.Services
             }
         }
 
-
+        public virtual CustomerReview[] GetByProductId(string productId)
+        {
+            using (var repository = _repositoryFactory())
+            {
+                var result = repository.CustomerReviews.Where(x => x.ProductId == productId).ToArray();
+                return result;
+            }
+        }
     }
 }

@@ -2,12 +2,16 @@ using System;
 using System.Linq;
 using CustomerReviewsModule.Core.Model;
 using CustomerReviewsModule.Core.Services;
+using CustomerReviewsModule.Data.BackgroundJobs;
+using CustomerReviewsModule.Data.Model;
 using CustomerReviewsModule.Data.Repositories;
+using Hangfire;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace CustomerReviewsModule.Data.Services
 {
-    public class ProductRatingService : IProductRatingService
+    public class ProductRatingService : ServiceBase, IProductRatingService
     {
 
 
@@ -18,7 +22,7 @@ namespace CustomerReviewsModule.Data.Services
             _repositoryFactory = repositoryFactory;
         }
 
-        public ProductRating GetProductRating(string productId)
+        public virtual ProductRating GetProductRating(string productId)
         {
             using (var repository = _repositoryFactory())
             {
@@ -39,10 +43,42 @@ namespace CustomerReviewsModule.Data.Services
                 return result;
             }
         }
-
-        public void RecalculateProductRating(string[] productIds)
+        /// <summary>
+        /// enqueue hangfires job for recalculating products ratings
+        /// </summary>
+        /// <param name="productIds"></param>
+        public virtual void RecalculateProductRating(string[] productIds)
         {
-            throw new NotImplementedException();
+            BackgroundJob.Enqueue<RecalculateProductsRatingsJob>(x => x.Recalculate(productIds));
+        }
+
+        public virtual void SaveProductRating(ProductRating productRating)
+        {
+            using (var repository = _repositoryFactory())
+            using (var changeTracker = base.GetChangeTracker(repository))
+            {
+
+
+                var sourceEntity = AbstractTypeFactory<ProductRatingEntity>.TryCreateInstance()
+                    .FromModel(productRating);
+
+                var targetEntity = repository.ProductRatings
+                    .Where(x => x.ProductId == productRating.ProductId)
+                    .FirstOrDefault();
+
+
+                if (targetEntity != null)
+                {
+                    changeTracker.Attach(targetEntity);
+                    sourceEntity.Patch(targetEntity);
+                }
+                else
+                {
+                    repository.Add(sourceEntity);
+                }
+
+                repository.UnitOfWork.Commit();
+            }
         }
     }
 }

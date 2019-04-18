@@ -12,5 +12,7 @@ namespace CustomerReviewsModule.Core.Services
 
         void RecalculateProductRating(string[] productIds);
 
+        void SaveProductRating(ProductRating productRating);
+
     }
 }

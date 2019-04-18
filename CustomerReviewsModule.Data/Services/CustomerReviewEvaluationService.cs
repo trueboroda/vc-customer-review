@@ -5,10 +5,11 @@ using CustomerReviewsModule.Core.Services;
 using CustomerReviewsModule.Data.Model;
 using CustomerReviewsModule.Data.Repositories;
 using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace CustomerReviewsModule.Data.Services
 {
-    public class CustomerReviewEvaluationService : ICustomerReviewEvaluationService
+    public class CustomerReviewEvaluationService : ServiceBase, ICustomerReviewEvaluationService
     {
         private readonly Func<ICustomerReviewRepository> _repositoryFactory;
 
@@ -18,7 +19,7 @@ namespace CustomerReviewsModule.Data.Services
             _repositoryFactory = repositoryFactory;
         }
 
-        public virtual CustomerReviewEvaluation GetCustomerReviewEvalutionForCustomer(string reviewId, string customerId)
+        public virtual CustomerReviewEvaluation GetCustomerReviewEvaluationForCustomer(string reviewId, string customerId)
         {
             using (var repository = _repositoryFactory())
             {
@@ -36,6 +37,7 @@ namespace CustomerReviewsModule.Data.Services
         public virtual void SaveEvaluation(CustomerReviewEvaluation evaluation)
         {
             using (var repository = _repositoryFactory())
+            using (var changeTracker = base.GetChangeTracker(repository))
             {
                 var targetEntity = repository.CustomerReviewEvaluations
                     .Where(x => x.CustomerReviewId == evaluation.CustomerReviewId && x.CustomerId == evaluation.CustomerId)
@@ -48,6 +50,7 @@ namespace CustomerReviewsModule.Data.Services
 
                 if (targetEntity != null)
                 {
+                    changeTracker.Attach(targetEntity);
                     sourceEntity.Patch(targetEntity);
                 }
                 else
@@ -55,6 +58,7 @@ namespace CustomerReviewsModule.Data.Services
                     repository.Add(sourceEntity);
                 }
 
+                CommitChanges(repository);
             }
         }
     }

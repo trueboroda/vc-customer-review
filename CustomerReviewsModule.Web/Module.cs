@@ -43,7 +43,9 @@ namespace CustomerReviewsModule.Web
 
             _container.RegisterType<ICustomerReviewSearchService, CustomerReviewSearchService>();
             _container.RegisterType<ICustomerReviewService, CustomerReviewService>();
+            _container.RegisterType<IProductRatingCalc, ProductRatingCalc>();
             _container.RegisterType<IProductRatingService, ProductRatingService>();
+
 
         }
 

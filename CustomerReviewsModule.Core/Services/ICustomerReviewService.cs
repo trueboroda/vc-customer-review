@@ -11,6 +11,8 @@ namespace CustomerReviewsModule.Core.Services
 
         CustomerReview[] GetByIds(string[] ids);
 
+        CustomerReview[] GetByProductId(string productId);
+
         CustomerReview GetById(string id);
 
         CustomerReview CreateCustomerReview(CustomerReview review);
