@@ -20,6 +20,7 @@ namespace CustomerReviewsModule.Data.Services
         public CustomerReviewService(Func<ICustomerReviewRepository> repositoryFactory, IProductRatingService productRatingService)
         {
             _repositoryFactory = repositoryFactory;
+            _productRatingService = productRatingService;
         }
 
 
@@ -152,7 +153,7 @@ namespace CustomerReviewsModule.Data.Services
         {
             if (productId == null)
             {
-                throw new ArgumentNullException(nameof(review));
+                throw new ArgumentNullException(nameof(productId));
             }
 
             using (var repository = _repositoryFactory())

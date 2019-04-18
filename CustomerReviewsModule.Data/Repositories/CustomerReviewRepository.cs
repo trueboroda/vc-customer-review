@@ -39,7 +39,7 @@ namespace CustomerReviewsModule.Data.Repositories
 
 
 
-      
+
         public void DeleteCustomerReviews(string[] ids)
         {
             var items = GetCustomerReviewsByIds(ids);
@@ -57,16 +57,6 @@ namespace CustomerReviewsModule.Data.Repositories
         }
 
 
-
-        //public CustomerReviewEvaluationEntity GetCustomerReviewEvalueation(string reviewId, string customerId)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //public ProductRatingEntity GetProductRating(string productId)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
 
 
 

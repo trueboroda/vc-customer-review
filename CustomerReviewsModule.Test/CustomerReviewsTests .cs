@@ -5,6 +5,7 @@ using CustomerReviewsModule.Core.Services;
 using CustomerReviewsModule.Data.Migrations;
 using CustomerReviewsModule.Data.Repositories;
 using CustomerReviewsModule.Data.Services;
+using Moq;
 using VirtoCommerce.Platform.Data.Infrastructure;
 using VirtoCommerce.Platform.Data.Infrastructure.Interceptors;
 using VirtoCommerce.Platform.Testing.Bases;
@@ -87,7 +88,16 @@ namespace CustomerReviewsModule.Test
         }
 
         private ICustomerReviewSearchService CustomerReviewSearchService => new CustomerReviewSearchService(GetRepository, CustomerReviewService);
-        private ICustomerReviewService CustomerReviewService => new CustomerReviewService(GetRepository);
+        private ICustomerReviewService CustomerReviewService
+        {
+            get
+            {
+                var mock = new Mock<IProductRatingService>();
+                var result = new CustomerReviewService(GetRepository, mock.Object);
+                return result;
+            }
+
+        }
 
 
         protected ICustomerReviewRepository GetRepository()
