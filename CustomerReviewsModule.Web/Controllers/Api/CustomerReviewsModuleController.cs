@@ -90,7 +90,7 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         /// <summary>
         /// Delete Customer Reviews by IDs
         /// </summary>
-        /// <param name="ids">IDs</param>
+        /// <param name="ids">IDs of reviews</param>
         /// <returns></returns>
         [HttpDelete]
         [Route("")]
@@ -103,11 +103,15 @@ namespace CustomerReviewsModule.Web.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-
+        /// <summary>
+        /// Return concret customer like/dislike evaluation for concret review
+        /// </summary>
+        /// <param name="reviewId">review Id</param>
+        /// <param name="customerId">customer Id</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("evaluetion")]
-        [ResponseType(typeof(void))]
-        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
+        [ResponseType(typeof(CustomerReviewEvaluation))]
         public IHttpActionResult GetCustomerReviewEvaluationForCustomer(string reviewId, string customerId)
         {
             var result = _customerReviewEvaluationService.GetCustomerReviewEvaluationForCustomer(reviewId, customerId);
@@ -115,9 +119,14 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         }
 
 
-
+        /// <summary>
+        /// Add or update concret customer like/dislike evaluation for concret review
+        /// </summary>
+        /// <param name="evaluation"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("evaluation")]
+        [ResponseType(typeof(void))]
         public IHttpActionResult SaveCustomerReviewEvaluation(CustomerReviewEvaluation evaluation)
         {
 
@@ -126,7 +135,11 @@ namespace CustomerReviewsModule.Web.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-
+        /// <summary>
+        /// Return total rating of product
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("productrating")]
         [ResponseType(typeof(ProductRating))]
