@@ -11,7 +11,6 @@ namespace CustomerReviewsModule.Data.Model
         [StringLength(128)]
         public string ProductId { get; set; }
 
-        [StringLength(128)]
         public double Rating { get; set; }
 
 
