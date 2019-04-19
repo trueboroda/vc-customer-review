@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -50,6 +51,23 @@ namespace CustomerReviewsModule.Web.Controllers.Api
             GenericSearchResult<CustomerReview> result = _customerReviewSearchService.SearchCustomerReviews(criteria);
             return Ok(result);
 
+        }
+
+
+        /// <summary>
+        /// Delete Customer Reviews by IDs
+        /// </summary>
+        /// <param name="ids">IDs of reviews</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("")]
+        [ResponseType(typeof(IEnumerable<CustomerReview>))]
+        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewDelete)]
+        public IHttpActionResult Delete([FromUri] string[] ids)
+        {
+            _customerReviewService.GetByIds(ids);
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
 

@@ -31,12 +31,27 @@ angular.module(moduleTemplateName, [])
         //Register module in main menu
         var menuItem = {
             path: 'browse/CustomerReviewsModule',
-            icon: 'fa fa-cube',
+            icon: 'fa fa-comments',
             title: 'CustomerReviewsModule',
             priority: 100,
             action: function () { $state.go('workspace.CustomerReviewsModule'); },
             permission: 'CustomerReviewsModulePermission'
         };
         mainMenuService.addMenuItem(menuItem);
+
+
+        //Register reviews widget inside product blade
+        var itemReviewsWidget = {
+            controller: 'CustomerReviewsModule.customerReviewWidgetController',
+            template: 'Modules/$(CustomerReviewsModule)/Scripts/widgets/customerReviewWidget.tpl.html'
+        };
+        widgetService.registerWidget(itemReviewsWidget, 'itemDetail');
+
+        //Register reviews widget inside product blade
+        var itemRatingWidget = {
+            controller: 'CustomerReviewsModule.productRatingWidgetWidgetController',
+            template: 'Modules/$(CustomerReviewsModule)/Scripts/widgets/productRatingWidget.tpl.html'
+        };
+        widgetService.registerWidget(itemRatingWidget, 'itemDetail');
     }
 ]);

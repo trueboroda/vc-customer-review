@@ -1,0 +1,91 @@
+<div class="blade-content __medium-wide">
+    <div class="blade-inner">
+        <div class="inner-block">
+            <form name="detailForm">
+                <fieldset ng-init="setForm(detailForm)">
+                    <div class="columns clearfix">
+                        <div class="column">
+                            <div class="form-group">
+                                <label class="form-label">{{'customerReviews.blades.review-detail.labels.is-active' | translate}}</label>
+
+                                <div class="form-input">
+                                    <label class="form-label __switch">
+                                        <input type="checkbox" ng-model="blade.item.isActive" />
+                                        <span class="switch"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columns clearfix">
+                        <div class="column">
+                            <div class="form-group __info list">
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.created-date' | translate }}</label>
+
+                                <div class="form-input">
+                                    <input ng-model="blade.item.createdDate" datepicker-popup="" readonly />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="form-group __info list">
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.modified-date' | translate }}</label>
+
+                                <div class="form-input">
+                                    <input ng-model="blade.item.modifiedDate" datepicker-popup="" readonly />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columns clearfix">
+                        <div class="column">
+                            <div class="form-group">
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.content' | translate }}</label>
+
+                                <div class="form-input">
+                                    <textarea ng-model="blade.item.content"
+                                              name="content"
+                                              placeholder="{{ 'customerReviews.blades.review-detail.labels.content' | translate }}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columns clearfix">
+                        <div class="column">
+                            <div class="form-group __info list">
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.rating' | translate }}</label>
+
+                                <div class="form-input">
+                                    <input ng-model="blade.item.rating" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="form-group __info list">
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.like-count' | translate }}</label>
+                                <i class="fa fa-thumbs-up"></i>
+                                <div class="form-input">
+                                    <input ng-model="blade.item.likeCount" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="form-group __info list">
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.dislike-count' | translate }}</label>
+                                <i class="fa fa-thumbs-down"></i>
+                                <div class="form-input">
+                                    <input ng-model="blade.item.dislikeCount" readonly />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+            </form>
+        </div>
+    </div>
+</div>

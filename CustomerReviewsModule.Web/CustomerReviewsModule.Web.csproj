@@ -136,11 +136,15 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\css\CustomerReviewsModule.Web.css" />
+    <Content Include="Scripts\blades\review-detail.js" />
+    <Content Include="Scripts\blades\review-detail.tpl.html" />
     <Content Include="Scripts\blades\reviews-list.js" />
     <Content Include="Scripts\blades\reviews-list.tpl.html" />
-    <Content Include="Scripts\CustomerReviewsModule.Web.js" />
-    <Content Include="Scripts\resources\CustomerReviewsModule.WebApi.js" />
+    <Content Include="Scripts\customerReviewsModule.js" />
+    <Content Include="Scripts\resources\cstomerReviewsModuleApi.js" />
+    <Content Include="Scripts\widgets\productRatingWidget.js" />
     <Content Include="Scripts\widgets\customerReviewWidget.js" />
+    <Content Include="Scripts\widgets\productRatingWidget.tpl.html" />
     <Content Include="Scripts\widgets\customerReviewWidget.tpl.html" />
   </ItemGroup>
   <ItemGroup>

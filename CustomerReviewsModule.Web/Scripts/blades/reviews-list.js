@@ -1,5 +1,5 @@
 angular.module('CustomerReviewsModule')
-    .controller('CustomerReviewsModule.reviewsListController', ['$scope', 'CustomerReviewsModuleApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper',
+    .controller('CustomerReviewsModule.reviewsListController', ['$scope', 'customerReviewsModuleApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper',
         function ($scope, reviewsApi, bladeUtils, uiGridConstants, uiGridHelper) {
             $scope.uiGridConstants = uiGridConstants;
 
@@ -20,33 +20,35 @@ angular.module('CustomerReviewsModule')
                 });
             };
 
-            blade.selectNode = function (data) {
-                //$scope.selectedNodeId = data.id;
-
-                //var newBlade = {
-                //    id: 'reviewDetails',
-                //    currentEntityId: data.id,
-                //    currentEntity: data,
-                //    title: data.name,
-                //    controller: 'virtoCommerce.storeModule.storeDetailController',
-                //    template: 'Modules/$(VirtoCommerce.Store)/Scripts/blades/store-detail.tpl.html'
-                //};
-                //bladeNavigationService.showBlade(newBlade, blade);
-            };
-
-            function openBladeNew() {
-                $scope.selectedNodeId = null;
+            //open detail blaid
+            blade.selectNode = function (data) {               
+                $scope.selectedNodeId = data.id;
 
                 var newBlade = {
-                    id: 'storeDetails',
-                    currentEntity: {},
-                    title: 'stores.blades.new-store-wizard.title',
-                    subtitle: 'stores.blades.new-store-wizard.subtitle',
-                    controller: 'virtoCommerce.storeModule.newStoreWizardController',
-                    template: 'Modules/$(VirtoCommerce.Store)/Scripts/wizards/newStore/new-store-wizard.tpl.html'
+                    id: 'reviewDetail',
+                    currentEntityId: data.id,
+                    currentEntity: data,
+                    title: data.name,
+                    controller: 'CustomerReviewsModule.reviewDetailController',
+                    template: 'Modules/$(CustomerReviewsModule)/Scripts/blades/review-detail.tpl.html'
                 };
+
                 bladeNavigationService.showBlade(newBlade, blade);
-            }
+            };
+
+            //function openBladeNew() {
+            //    $scope.selectedNodeId = null;
+
+            //    var newBlade = {
+            //        id: 'storeDetails',
+            //        currentEntity: {},
+            //        title: 'stores.blades.new-store-wizard.title',
+            //        subtitle: 'stores.blades.new-store-wizard.subtitle',
+            //        controller: 'virtoCommerce.storeModule.newStoreWizardController',
+            //        template: 'Modules/$(VirtoCommerce.Store)/Scripts/wizards/newStore/new-store-wizard.tpl.html'
+            //    };
+            //    bladeNavigationService.showBlade(newBlade, blade);
+            //}
 
             blade.headIcon = 'fa-comments';
 
