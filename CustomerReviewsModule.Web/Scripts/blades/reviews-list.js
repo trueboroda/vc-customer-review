@@ -28,7 +28,7 @@ angular.module('CustomerReviewsModule')
                     id: 'reviewDetail',
                     currentEntityId: data.id,
                     currentEntity: data,
-                    title: data.name,
+                    title: 'customerReviews.blades.review-detail.title',                    
                     controller: 'CustomerReviewsModule.reviewDetailController',
                     template: 'Modules/$(CustomerReviewsModule)/Scripts/blades/review-detail.tpl.html'
                 };
@@ -36,19 +36,7 @@ angular.module('CustomerReviewsModule')
                 bladeNavigationService.showBlade(newBlade, blade);
             };
 
-            //function openBladeNew() {
-            //    $scope.selectedNodeId = null;
-
-            //    var newBlade = {
-            //        id: 'storeDetails',
-            //        currentEntity: {},
-            //        title: 'stores.blades.new-store-wizard.title',
-            //        subtitle: 'stores.blades.new-store-wizard.subtitle',
-            //        controller: 'virtoCommerce.storeModule.newStoreWizardController',
-            //        template: 'Modules/$(VirtoCommerce.Store)/Scripts/wizards/newStore/new-store-wizard.tpl.html'
-            //    };
-            //    bladeNavigationService.showBlade(newBlade, blade);
-            //}
+         
 
             blade.headIcon = 'fa-comments';
 

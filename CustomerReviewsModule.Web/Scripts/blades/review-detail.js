@@ -2,10 +2,10 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('CustomerReviewsModule')
         .controller('CustomerReviewsModule.reviewDetailController', reviewDetailController);
 
-    review_detail.$inject = ['$scope', 'customerReviewsModuleApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper'];
+    reviewDetailController.$inject = ['$scope', 'customerReviewsModuleApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper'];
 
     function reviewDetailController($scope, reviewsApi, bladeUtils, uiGridConstants, uiGridHelper) {
         var blade = $scope.blade;
@@ -24,12 +24,12 @@
 
         blade.toolbarCommands = [
             {
-                name: "customerReviews.blades.review-details.commands.save", icon: 'fa fa-save',
-                executeMethod: saveReview,
+                name: "customerReviews.blades.review-detail.commands.save", icon: 'fa fa-save',
+                executeMethod: saveReview,                
                 permission: permissions.update
             },
             {
-                name: "customerReviews.blades.review-details.commands.delete", icon: 'fa fa-save',
+                name: "customerReviews.blades.review-detail.commands.delete", icon: 'fa fa-save',
                 executeMethod: deleteReview,
                 permission: permissions.delete
             }

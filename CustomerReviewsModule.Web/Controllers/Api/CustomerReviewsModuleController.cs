@@ -114,7 +114,7 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [Route("")]
         [ResponseType(typeof(void))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewDelete)]
-        public IHttpActionResult Delete([FromUri] string[] ids)
+        public IHttpActionResult GetByIds([FromUri] string[] ids)
         {
             _customerReviewService.DeleteCustomerReviews(ids);
 

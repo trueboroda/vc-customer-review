@@ -42,6 +42,7 @@ namespace CustomerReviewsModule.Web
                 , _container.Resolve<AuditableInterceptor>())));
 
             _container.RegisterType<ICustomerReviewSearchService, CustomerReviewSearchService>();
+            _container.RegisterType<ICustomerReviewEvaluationService, CustomerReviewEvaluationService>();
             _container.RegisterType<ICustomerReviewService, CustomerReviewService>();
             _container.RegisterType<IProductRatingCalc, ProductRatingCalc>();
             _container.RegisterType<IProductRatingService, ProductRatingService>();
