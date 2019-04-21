@@ -25,7 +25,7 @@
         blade.toolbarCommands = [
             {
                 name: "platform.commands.save", icon: 'fa fa-save',
-                executeMethod: $scope.saveChanges,
+                executeMethod: saveChanges,
                 canExecuteMethod: canSave,
                 permission: permissions.CR_UPDATE
             },
@@ -75,7 +75,7 @@
         };
 
         //save changes
-        $scope.saveChanges = function () {
+        function saveChanges() {
             blade.isLoading = true;
 
             var entityToSave = angular.copy(blade.currentEntity);
