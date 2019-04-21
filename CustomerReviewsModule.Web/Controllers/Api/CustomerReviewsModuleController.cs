@@ -62,12 +62,12 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(IEnumerable<CustomerReview>))]
-        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewDelete)]
-        public IHttpActionResult Delete([FromUri] string[] ids)
+        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewRead)]
+        public IHttpActionResult GetByIds([FromUri] string[] ids)
         {
-            _customerReviewService.GetByIds(ids);
+            var result = _customerReviewService.GetByIds(ids);
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(result);
         }
 
 
@@ -114,7 +114,7 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [Route("")]
         [ResponseType(typeof(void))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewDelete)]
-        public IHttpActionResult GetByIds([FromUri] string[] ids)
+        public IHttpActionResult Delete([FromUri] string[] ids)
         {
             _customerReviewService.DeleteCustomerReviews(ids);
 

@@ -76,7 +76,7 @@ namespace CustomerReviewsModule.Data.Model
             Content = customerReview.Content;
             IsActive = customerReview.IsActive;
             ProductId = customerReview.ProductId;
-            customerReview.Rating = Rating;
+            Rating = customerReview.Rating;
             //customerReview.LikeCount = LikeCount;
             //customerReview.DislikeCount = DislikeCount;
 

@@ -10,7 +10,7 @@
 
                                 <div class="form-input">
                                     <label class="form-label __switch">
-                                        <input type="checkbox" ng-model="blade.item.isActive" />
+                                        <input type="checkbox" ng-model="blade.currentEntity.isActive" />
                                         <span class="switch"></span>
                                     </label>
                                 </div>
@@ -24,7 +24,7 @@
                                 <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.created-date' | translate }}</label>
 
                                 <div class="form-input">
-                                    <input ng-model="blade.item.createdDate" datepicker-popup="" readonly />
+                                    <input ng-model="blade.currentEntity.createdDate" datepicker-popup="" readonly />
                                 </div>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                                 <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.modified-date' | translate }}</label>
 
                                 <div class="form-input">
-                                    <input ng-model="blade.item.modifiedDate" datepicker-popup="" readonly />
+                                    <input ng-model="blade.currentEntity.modifiedDate" datepicker-popup="" readonly />
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                 <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.content' | translate }}</label>
 
                                 <div class="form-input">
-                                    <textarea ng-model="blade.item.content"
+                                    <textarea ng-model="blade.currentEntity.content"
                                               name="content"
                                               placeholder="{{ 'customerReviews.blades.review-detail.labels.content' | translate }}"></textarea>
                                 </div>
@@ -60,7 +60,7 @@
                                 <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.rating' | translate }}</label>
 
                                 <div class="form-input">
-                                    <input ng-model="blade.item.rating" readonly />
+                                    <input ng-model="blade.currentEntity.rating" readonly />
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                             <div class="form-group __info list">
                                 <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.like-count' | translate }}</label>                                
                                 <div class="form-input">
-                                    <input ng-model="blade.item.likeCount" readonly />
+                                    <input ng-model="blade.currentEntity.likeCount" readonly />
                                 </div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                             <div class="form-group __info list">
                                 <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.dislike-count' | translate }}</label>                               
                                 <div class="form-input">
-                                    <input ng-model="blade.item.dislikeCount" readonly />
+                                    <input ng-model="blade.currentEntity.dislikeCount" readonly />
                                 </div>
                             </div>
                         </div>
@@ -84,6 +84,7 @@
                 </fieldset>
 
             </form>
+            {{detailForm.$error}}
         </div>
     </div>
 </div>

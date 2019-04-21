@@ -5,43 +5,45 @@
         .module('CustomerReviewsModule')
         .controller('CustomerReviewsModule.reviewDetailController', reviewDetailController);
 
-    reviewDetailController.$inject = ['$scope', 'customerReviewsModuleApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper'];
+    reviewDetailController.$inject = ['$scope', 'customerReviewsModuleApi', 'platformWebApp.bladeUtils', 'platformWebApp.dialogService', 'platformWebApp.authService'];
 
-    function reviewDetailController($scope, reviewsApi, bladeUtils, uiGridConstants, uiGridHelper) {
+    function reviewDetailController($scope, reviewsApi, bladeUtils, dialogService, authService) {
         var blade = $scope.blade;
         var bladeNavigationService = bladeUtils.bladeNavigationService;
 
-        blade.headIcon = 'fa-comments';
-        blade.title = 'Review details';
+        blade.headIcon = 'fa-comment';
+        //blade.title = 'customerReviews.blades.review-detail.title';
 
         var permissions = {
-            update: 'customerReview:update',
-            delete: 'customerReview:delete'
+            CR_UPDATE: 'customerReview:update',
+            CR_DELETE: 'customerReview:delete'
         };
 
-        blade.formScope = null;
-        $scope.setForm = function (form) { blade.formScope = form; };
+        $scope.formScope = null;
+        $scope.setForm = function (form) { $scope.formScope = form; };
 
         blade.toolbarCommands = [
             {
-                name: "customerReviews.blades.review-detail.commands.save", icon: 'fa fa-save',
-                executeMethod: saveReview,                
-                permission: permissions.update
+                name: "platform.commands.save", icon: 'fa fa-save',
+                executeMethod: $scope.saveChanges,
+                canExecuteMethod: canSave,
+                permission: permissions.CR_UPDATE
             },
             {
-                name: "customerReviews.blades.review-detail.commands.delete", icon: 'fa fa-save',
+                name: "platform.commands.reset",
+                icon: 'fa fa-undo',
+                executeMethod: undoChanges,
+                canExecuteMethod: isDirty,
+                permission: permissions.CR_UPDATE
+            },
+            {
+                name: "platform.commands.delete",
+                icon: 'fa fa-trash',
                 executeMethod: deleteReview,
-                permission: permissions.delete
+                canExecuteMethod: function () { return true; },
+                permission: permissions.CR_DELETE
             }
         ];
-
-        function saveReview() {
-
-        }
-
-        function deleteReview(){
-
-        }
 
         blade.refresh = function (parentRefresh) {
             blade.isLoading = true;
@@ -50,19 +52,20 @@
                 { ids: blade.currentEntityId },
 
                 function (data) {
-                    var dataItem = data[0];
+                    var reviewData = data[0];
 
-                    blade.item = angular.copy(dataItem);
-                    blade.currentEntity = blade.item;
-                    blade.origItem = dataItem;
+                    var item = angular.copy(reviewData);
+                    blade.currentEntity = item;
+                    blade.origEntity = reviewData;
 
-                    
+                    blade.isLoading = false;
+
 
                     if (parentRefresh && blade.parentBlade.refresh) {
                         blade.parentBlade.refresh();
                     }
 
-                    blade.isLoading = false;
+
                 },
 
                 function (error) {
@@ -70,6 +73,57 @@
                 }
             );
         };
+
+        //save changes
+        $scope.saveChanges = function () {
+            blade.isLoading = true;
+
+            var entityToSave = angular.copy(blade.currentEntity);
+
+            reviewsApi.update([entityToSave], function (data) {
+                blade.refresh(true);
+            }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+
+        };
+
+        function undoChanges() {
+            angular.copy(blade.origEntity, blade.currentEntity);
+        }
+
+        //deleting
+        function deleteReview(){
+            var dialog = {
+                id: "confirmDeleteReview",
+                title: "customerReviews.dialogs.reviews-delete.title",
+                message: "customerReviews.dialogs.reviews-delete.message",
+                callback: function (remove) {
+                    if (remove) {
+                        $scope.isLoading = true;                        
+                        
+                        reviewsApi.delete({ ids: blade.currentEntityId }, function (data, headers) {
+                            $scope.bladeClose();
+                            blade.parentBlade.refresh();
+                        },
+                            function (error) {
+                                bladeNavigationService.setError('Error ' + error.status, blade);
+                            });
+
+                    }
+                }
+            };
+            dialogService.showConfirmationDialog(dialog);
+        }
+
+
+        function isDirty() {
+            return !angular.equals(blade.currentEntity, blade.origEntity) && authService.checkPermission(permissions.CR_UPDATE);
+        }
+
+        function canSave() {
+            return isDirty() && $scope.formScope && $scope.formScope.$valid;
+        }
+
+       
 
 
         //activation

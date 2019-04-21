@@ -35,7 +35,7 @@ angular.module(moduleTemplateName, [])
             title: 'customerReviews.blades.review-list.title',
             priority: 100,
             action: function () { $state.go('workspace.CustomerReviewsModule'); },
-            permission: 'CustomerReviewsModulePermission'
+            permission: 'customerReview:read'
         };
         mainMenuService.addMenuItem(menuItem);
 

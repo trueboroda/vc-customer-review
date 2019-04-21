@@ -1,11 +1,23 @@
 {
   "customerReviews": {
+    "dialogs": {
+      "reviews-delete": {
+        "title": "Review removing",
+        "message":  "Are you sure to delete customers reviews?"
+      }
+    },
     "blades": {
       "review-list": {
         "title": "Customers reviews",
+        "commands": {
+          "approve": "Approve",
+          "ban": "Forbid"
+        },
         "labels": {
+          "is-active": "Approved",
           "content": "Content",
-          "modifiedDate": "Last updated",
+          "created-date": "Created",
+          "modified-date": "Last updated",
           "no-review": "No Customer Reviews found"
         }
       },
