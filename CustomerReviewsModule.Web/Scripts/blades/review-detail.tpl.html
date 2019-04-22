@@ -5,7 +5,16 @@
                 <fieldset ng-init="setForm(detailForm)">
                     <div class="columns clearfix">
                         <div class="column">
-                            <div class="form-group">
+                            <div class="form-group __info list">
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.rating' | translate }}</label>
+                                <!--<input ng-model="blade.currentEntity.rating"  />-->
+                                <div class="form-input">
+                                    <star-rating ng-model="customerRating" max="5" readonly="true"></star-rating>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="form-group __info list">
                                 <label class="form-label">{{'customerReviews.blades.review-detail.labels.is-active' | translate}}</label>
 
                                 <div class="form-input">
@@ -57,16 +66,7 @@
                     <div class="columns clearfix">
                         <div class="column">
                             <div class="form-group __info list">
-                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.rating' | translate }}</label>
-
-                                <div class="form-input">
-                                    <input ng-model="blade.currentEntity.rating" readonly />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="form-group __info list">
-                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.like-count' | translate }}</label>                                
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.like-count' | translate }}</label>
                                 <div class="form-input">
                                     <input ng-model="blade.currentEntity.likeCount" readonly />
                                 </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="column">
                             <div class="form-group __info list">
-                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.dislike-count' | translate }}</label>                               
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.dislike-count' | translate }}</label>
                                 <div class="form-input">
                                     <input ng-model="blade.currentEntity.dislikeCount" readonly />
                                 </div>
@@ -85,6 +85,11 @@
 
             </form>
             {{detailForm.$error}}
+
+            <!--
+             <rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+            -->
+
         </div>
     </div>
 </div>

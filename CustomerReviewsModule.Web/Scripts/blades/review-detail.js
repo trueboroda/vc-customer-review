@@ -8,6 +8,9 @@
     reviewDetailController.$inject = ['$scope', 'customerReviewsModuleApi', 'platformWebApp.bladeUtils', 'platformWebApp.dialogService', 'platformWebApp.authService'];
 
     function reviewDetailController($scope, reviewsApi, bladeUtils, dialogService, authService) {
+
+
+        $scope.customerRating = 0;
         var blade = $scope.blade;
         var bladeNavigationService = bladeUtils.bladeNavigationService;
 
@@ -22,57 +25,7 @@
         $scope.formScope = null;
         $scope.setForm = function (form) { $scope.formScope = form; };
 
-        blade.toolbarCommands = [
-            {
-                name: "platform.commands.save", icon: 'fa fa-save',
-                executeMethod: saveChanges,
-                canExecuteMethod: canSave,
-                permission: permissions.CR_UPDATE
-            },
-            {
-                name: "platform.commands.reset",
-                icon: 'fa fa-undo',
-                executeMethod: undoChanges,
-                canExecuteMethod: isDirty,
-                permission: permissions.CR_UPDATE
-            },
-            {
-                name: "platform.commands.delete",
-                icon: 'fa fa-trash',
-                executeMethod: deleteReview,
-                canExecuteMethod: function () { return true; },
-                permission: permissions.CR_DELETE
-            }
-        ];
-
-        blade.refresh = function (parentRefresh) {
-            blade.isLoading = true;
-
-            return reviewsApi.getByIds(
-                { ids: blade.currentEntityId },
-
-                function (data) {
-                    var reviewData = data[0];
-
-                    var item = angular.copy(reviewData);
-                    blade.currentEntity = item;
-                    blade.origEntity = reviewData;
-
-                    blade.isLoading = false;
-
-
-                    if (parentRefresh && blade.parentBlade.refresh) {
-                        blade.parentBlade.refresh();
-                    }
-
-
-                },
-
-                function (error) {
-                    bladeNavigationService.setError('Error ' + error.status, blade);
-                }
-            );
-        };
+     
 
         //save changes
         function saveChanges() {
@@ -84,7 +37,7 @@
                 blade.refresh(true);
             }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
 
-        };
+        }
 
         function undoChanges() {
             angular.copy(blade.origEntity, blade.currentEntity);
@@ -123,8 +76,61 @@
             return isDirty() && $scope.formScope && $scope.formScope.$valid;
         }
 
-       
 
+        //blade toolbar commands
+        blade.toolbarCommands = [
+            {
+                name: "platform.commands.save", icon: 'fa fa-save',
+                executeMethod: saveChanges,
+                canExecuteMethod: canSave,
+                permission: permissions.CR_UPDATE
+            },
+            {
+                name: "platform.commands.reset",
+                icon: 'fa fa-undo',
+                executeMethod: undoChanges,
+                canExecuteMethod: isDirty,
+                permission: permissions.CR_UPDATE
+            },
+            {
+                name: "platform.commands.delete",
+                icon: 'fa fa-trash',
+                executeMethod: deleteReview,
+                canExecuteMethod: function () { return true; },
+                permission: permissions.CR_DELETE
+            }
+        ];
+
+        blade.refresh = function (parentRefresh) {
+            blade.isLoading = true;
+
+            return reviewsApi.getByIds(
+                { ids: blade.currentEntityId },
+
+                function (data) {
+                    var reviewData = data[0];
+
+                    var item = angular.copy(reviewData);
+                    blade.currentEntity = item;
+                    blade.origEntity = reviewData;
+
+                    $scope.customerRating = item.rating;
+
+                    blade.isLoading = false;
+
+
+                    if (parentRefresh && blade.parentBlade.refresh) {
+                        blade.parentBlade.refresh();
+                    }
+
+                   
+                },
+
+                function (error) {
+                    bladeNavigationService.setError('Error ' + error.status, blade);
+                }
+            );
+        };
 
         //activation
         blade.refresh(false);

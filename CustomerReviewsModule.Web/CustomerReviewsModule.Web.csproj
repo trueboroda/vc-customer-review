@@ -135,11 +135,12 @@
     <Content Include="module.manifest">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Content\css\CustomerReviewsModule.Web.css" />
+    <Content Include="Content\css\CustomerReviewsModule.css" />
     <Content Include="Scripts\blades\review-detail.js" />
     <Content Include="Scripts\blades\review-detail.tpl.html" />
     <Content Include="Scripts\blades\reviews-list.js" />
     <Content Include="Scripts\blades\reviews-list.tpl.html" />
+    <Content Include="Scripts\common\directives\starRating.js" />
     <Content Include="Scripts\customerReviewsModule.js" />
     <Content Include="Scripts\resources\cstomerReviewsModuleApi.js" />
     <Content Include="Scripts\widgets\productRatingWidget.js" />

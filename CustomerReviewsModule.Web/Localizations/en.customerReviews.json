@@ -33,7 +33,7 @@
           "created-date": "Created",
           "modified-date": "Last updated",
           "product": "Product",
-          "rating": "Review rating",
+          "rating": "User product rating",
           "like-count": "Number of likes",
           "dislike-count": "Number of dislikes"
         },

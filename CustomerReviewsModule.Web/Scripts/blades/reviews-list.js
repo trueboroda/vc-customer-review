@@ -17,46 +17,7 @@ angular.module('CustomerReviewsModule')
 
             blade.headIcon = 'fa-comments';
             blade.title = 'customerReviews.blades.review-list.title';
-            blade.toolbarCommands = [
-                {
-                    name: "platform.commands.refresh", icon: 'fa fa-refresh',
-                    executeMethod: blade.refresh,
-                    canExecuteMethod: function () {
-                        return true;
-                    }
-                },
-                {
-                    name: "platform.commands.delete", icon: 'fa fa-trash-o',
-                    executeMethod: function () {
-                        $scope.deleteList($scope.gridApi.selection.getSelectedRows());
-                    },
-                    canExecuteMethod: function () {
-                        return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
-                    },
-                    permission: blade.permissions.CR_DELETE
-                },
-                {
-                    name: "customerReviews.blades.review-list.commands.approve", icon: 'fa fa-check',
-                    executeMethod: function () {
-                        approveList($scope.gridApi.selection.getSelectedRows());
-                    },
-                    canExecuteMethod: function () {
-                        return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
-                    },
-                    permission: blade.permissions.CR_DELETE
-                },
-                {
-                    name: "customerReviews.blades.review-list.commands.ban", icon: 'fa fa-ban',
-                    executeMethod: function () {
-                        banList($scope.gridApi.selection.getSelectedRows());
-                    },
-                    canExecuteMethod: function () {
-                        return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
-                    },
-                    permission: blade.permissions.CR_DELETE
-                }
-            ];
-
+           
 
            
             //refreshing/loading table data
@@ -151,6 +112,49 @@ angular.module('CustomerReviewsModule')
                     });
 
             }
+
+
+            //blade toolbar commands
+            blade.toolbarCommands = [
+                {
+                    name: "platform.commands.refresh", icon: 'fa fa-refresh',
+                    executeMethod: blade.refresh,
+                    canExecuteMethod: function () {
+                        return true;
+                    }
+                },
+                {
+                    name: "platform.commands.delete", icon: 'fa fa-trash-o',
+                    executeMethod: function () {
+                        $scope.deleteList($scope.gridApi.selection.getSelectedRows());
+                    },
+                    canExecuteMethod: function () {
+                        return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
+                    },
+                    permission: blade.permissions.CR_DELETE
+                },
+                {
+                    name: "customerReviews.blades.review-list.commands.approve", icon: 'fa fa-check',
+                    executeMethod: function () {
+                        approveList($scope.gridApi.selection.getSelectedRows());
+                    },
+                    canExecuteMethod: function () {
+                        return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
+                    },
+                    permission: blade.permissions.CR_DELETE
+                },
+                {
+                    name: "customerReviews.blades.review-list.commands.ban", icon: 'fa fa-ban',
+                    executeMethod: function () {
+                        banList($scope.gridApi.selection.getSelectedRows());
+                    },
+                    canExecuteMethod: function () {
+                        return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
+                    },
+                    permission: blade.permissions.CR_DELETE
+                }
+            ];
+
 
 
             // simple and advanced filtering
