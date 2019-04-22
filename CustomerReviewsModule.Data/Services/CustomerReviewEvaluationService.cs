@@ -55,6 +55,14 @@ namespace CustomerReviewsModule.Data.Services
             using (var repository = _repositoryFactory())
             using (var changeTracker = base.GetChangeTracker(repository))
             {
+
+                var customerReviewEntity = repository.CustomerReviews.FirstOrDefault(x => x.Id == evaluation.CustomerReviewId);
+
+                if (customerReviewEntity == null)
+                {
+                    throw new InvalidOperationException($"Customer review with such Id={evaluation.CustomerReviewId} was not found");
+                }
+
                 var targetEntity = repository.CustomerReviewEvaluations
                     .Where(x => x.CustomerReviewId == evaluation.CustomerReviewId && x.CustomerId == evaluation.CustomerId)
                     .FirstOrDefault();
@@ -64,14 +72,32 @@ namespace CustomerReviewsModule.Data.Services
                     .FromModel(evaluation);
 
 
-                if (targetEntity != null)
+                if ((targetEntity != null) && (targetEntity.ReviewIsLiked != sourceEntity.ReviewIsLiked))
                 {
                     changeTracker.Attach(targetEntity);
                     sourceEntity.Patch(targetEntity);
+
+                    if (sourceEntity.ReviewIsLiked)
+                    {
+                        customerReviewEntity.LikeCount++;
+                    }
+                    else
+                    {
+                        customerReviewEntity.DislikeCount++;
+                    }
                 }
                 else
                 {
                     repository.Add(sourceEntity);
+
+                    if (sourceEntity.ReviewIsLiked)
+                    {
+                        customerReviewEntity.LikeCount++;
+                    }
+                    else
+                    {
+                        customerReviewEntity.DislikeCount++;
+                    }
                 }
 
                 CommitChanges(repository);
