@@ -30,6 +30,8 @@
         "labels": {
           "is-active": "Approved",
           "content": "Content",
+          "created-by": "Created by",
+          "modified-by": "Modified by",
           "created-date": "Created",
           "modified-date": "Last updated",
           "product": "Product",

@@ -22,7 +22,6 @@
 
 
     ul.star-rating li.star::before {
-        color: transparent !important;
-        content: ' ' !important;
-        /*content: '\2014\a0 ';*/
+        color: transparent !important;        
+        content: '\2014\a0 ' !important;
     }

@@ -30,6 +30,28 @@
                     <div class="columns clearfix">
                         <div class="column">
                             <div class="form-group __info list">
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.created-by' | translate }}</label>
+
+                                <div class="form-input">
+                                    <input ng-model="blade.currentEntity.createdBy"  readonly />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="form-group __info list">
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.modified-by' | translate }}</label>
+
+                                <div class="form-input">
+                                    <input ng-model="blade.currentEntity.modifiedBy"  readonly />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columns clearfix">
+                        <div class="column">
+                            <div class="form-group __info list">
                                 <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.created-date' | translate }}</label>
 
                                 <div class="form-input">
@@ -66,7 +88,7 @@
                     <div class="columns clearfix">
                         <div class="column">
                             <div class="form-group __info list">
-                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.like-count' | translate }}</label>
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.like-count' | translate }} <span class="fa fa-thumbs-up" aria-hidden="true"></span></label>
                                 <div class="form-input">
                                     <input ng-model="blade.currentEntity.likeCount" readonly />
                                 </div>
@@ -74,7 +96,7 @@
                         </div>
                         <div class="column">
                             <div class="form-group __info list">
-                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.dislike-count' | translate }}</label>
+                                <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.dislike-count' | translate }} <span class="fa fa-thumbs-down" aria-hidden="true"></span></label>
                                 <div class="form-input">
                                     <input ng-model="blade.currentEntity.dislikeCount" readonly />
                                 </div>
