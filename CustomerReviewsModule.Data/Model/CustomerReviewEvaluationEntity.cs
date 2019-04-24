@@ -35,15 +35,15 @@ namespace CustomerReviewsModule.Data.Model
                 throw new ArgumentNullException(nameof(evaluation));
             }
 
-            evaluation.Id = Id;
-            evaluation.CreatedBy = CreatedBy;
-            evaluation.CreatedDate = CreatedDate;
-            evaluation.ModifiedBy = ModifiedBy;
-            evaluation.ModifiedDate = ModifiedDate;
+            Id = evaluation.Id;
+            CreatedBy = evaluation.CreatedBy;
+            CreatedDate = evaluation.CreatedDate;
+            ModifiedBy = evaluation.ModifiedBy;
+            ModifiedDate = evaluation.ModifiedDate;
 
-            evaluation.CustomerReviewId = CustomerReviewId;
-            evaluation.CustomerId = CustomerId;
-            evaluation.ReviewIsLiked = ReviewIsLiked;
+            CustomerReviewId = evaluation.CustomerReviewId;
+            CustomerId = evaluation.CustomerId;
+            ReviewIsLiked = evaluation.ReviewIsLiked;
 
             return this;
         }

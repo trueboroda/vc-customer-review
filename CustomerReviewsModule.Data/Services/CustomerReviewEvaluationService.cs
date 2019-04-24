@@ -75,20 +75,23 @@ namespace CustomerReviewsModule.Data.Services
                     .FromModel(evaluation);
 
 
-                if ((targetEntity != null) && (targetEntity.ReviewIsLiked != sourceEntity.ReviewIsLiked))
+                if ((targetEntity != null))
                 {
-                    changeTracker.Attach(targetEntity);
-                    sourceEntity.Patch(targetEntity);
-                    //like counter changing
-                    if (sourceEntity.ReviewIsLiked)
+                    if (targetEntity.ReviewIsLiked != sourceEntity.ReviewIsLiked)
                     {
-                        customerReviewEntity.LikeCount++;
-                        customerReviewEntity.DislikeCount--;
-                    }
-                    else
-                    {
-                        customerReviewEntity.DislikeCount++;
-                        customerReviewEntity.LikeCount--;
+                        changeTracker.Attach(targetEntity);
+                        sourceEntity.Patch(targetEntity);
+                        //like counter changing
+                        if (sourceEntity.ReviewIsLiked)
+                        {
+                            customerReviewEntity.LikeCount++;
+                            customerReviewEntity.DislikeCount--;
+                        }
+                        else
+                        {
+                            customerReviewEntity.DislikeCount++;
+                            customerReviewEntity.LikeCount--;
+                        }
                     }
                 }
                 else
