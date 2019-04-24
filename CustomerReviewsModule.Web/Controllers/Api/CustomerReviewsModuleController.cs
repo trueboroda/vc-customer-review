@@ -10,6 +10,8 @@ using VirtoCommerce.Platform.Core.Web.Security;
 
 namespace CustomerReviewsModule.Web.Controllers.Api
 {
+
+
     [RoutePrefix("api/CustomerReviews")]
     public class CustomerReviewsModuleController : ApiController
     {

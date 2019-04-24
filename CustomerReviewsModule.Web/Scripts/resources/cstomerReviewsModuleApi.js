@@ -1,3 +1,10 @@
+(function () {
+    'use strict';
+/**
+ * service for customer review api access
+ *  
+ * */
+
 angular.module('CustomerReviewsModule')
 .factory('customerReviewsModuleApi', ['$resource', function ($resource) {
     return $resource('api/customerReviews', {}, {
@@ -11,3 +18,5 @@ angular.module('CustomerReviewsModule')
 
     }); 
 }]);
+
+})();

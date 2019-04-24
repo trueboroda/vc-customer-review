@@ -4,6 +4,9 @@ using CustomerReviewsModule.Core.Model;
 
 namespace CustomerReviewsModule.Data.Model
 {
+    /// <summary>
+    /// entity for extending Product entity with customers rating prop
+    /// </summary>
     public class ProductRatingEntity
     {
 

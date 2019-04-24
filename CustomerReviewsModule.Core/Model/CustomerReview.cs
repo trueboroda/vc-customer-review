@@ -2,6 +2,10 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace CustomerReviewsModule.Core.Model
 {
+
+    /// <summary>
+    /// Customer review
+    /// </summary>
     public class CustomerReview : AuditableEntity
 
     {
@@ -18,10 +22,6 @@ namespace CustomerReviewsModule.Core.Model
 
         public int LikeCount { get; set; }
         public int DislikeCount { get; set; }
-
-
-
-        //public ICollection<CustomerReviewEvaluation> Evaluations { get; set; }
 
     }
 }

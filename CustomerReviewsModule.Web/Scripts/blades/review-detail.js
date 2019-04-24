@@ -1,6 +1,10 @@
 (function () {
     'use strict';
 
+    /**
+     * controller for customer reviews detail blade content
+     * */
+
     angular
         .module('CustomerReviewsModule')
         .controller('CustomerReviewsModule.reviewDetailController', reviewDetailController);

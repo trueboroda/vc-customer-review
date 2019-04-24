@@ -9,6 +9,9 @@ using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace CustomerReviewsModule.Data.Services
 {
+    /// <summary>
+    /// service for work with like/dislike customer review entity. also automacit changing like counters of review entity under hood.
+    /// </summary>
     public class CustomerReviewEvaluationService : ServiceBase, ICustomerReviewEvaluationService
     {
         private readonly Func<ICustomerReviewRepository> _repositoryFactory;
@@ -76,20 +79,23 @@ namespace CustomerReviewsModule.Data.Services
                 {
                     changeTracker.Attach(targetEntity);
                     sourceEntity.Patch(targetEntity);
-
+                    //like counter changing
                     if (sourceEntity.ReviewIsLiked)
                     {
                         customerReviewEntity.LikeCount++;
+                        customerReviewEntity.DislikeCount--;
                     }
                     else
                     {
                         customerReviewEntity.DislikeCount++;
+                        customerReviewEntity.LikeCount--;
                     }
                 }
                 else
                 {
                     repository.Add(sourceEntity);
 
+                    //like counter changing
                     if (sourceEntity.ReviewIsLiked)
                     {
                         customerReviewEntity.LikeCount++;

@@ -5,7 +5,7 @@ using VirtoCommerce.Platform.Core.Common;
 namespace CustomerReviewsModule.Data.Repositories
 {
     /// <summary>
-    /// db context of CustomerReviews module
+    /// Repository for DAL operations over the customer review entities.
     /// </summary>
     public interface ICustomerReviewRepository
         : IRepository
@@ -21,7 +21,7 @@ namespace CustomerReviewsModule.Data.Repositories
 
         void DeleteCustomerReviews(string[] ids);
 
-       
+
 
     }
 }

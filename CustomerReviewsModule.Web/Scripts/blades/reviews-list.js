@@ -1,3 +1,7 @@
+(function () {
+    'use strict';
+
+
 angular.module('CustomerReviewsModule')
     .controller('CustomerReviewsModule.reviewsListController', ['$scope', 'customerReviewsModuleApi', 'platformWebApp.bladeUtils', 'platformWebApp.dialogService', 'uiGridConstants', 'platformWebApp.uiGridHelper', 
         function ($scope, reviewsApi, bladeUtils, dialogService, uiGridConstants, uiGridHelper) {
@@ -177,3 +181,4 @@ angular.module('CustomerReviewsModule')
             };
 
         }]);
+})();

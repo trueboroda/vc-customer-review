@@ -6,6 +6,9 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace CustomerReviewsModule.Data.Model
 {
+    /// <summary>
+    /// entity for saving like/dislike user history of customers reviews
+    /// </summary>
     public class CustomerReviewEvaluationEntity : AuditableEntity
     {
         public bool ReviewIsLiked { get; set; }

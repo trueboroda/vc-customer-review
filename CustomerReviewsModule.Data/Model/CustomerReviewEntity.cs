@@ -54,7 +54,6 @@ namespace CustomerReviewsModule.Data.Model
             customerReview.LikeCount = LikeCount;
             customerReview.DislikeCount = DislikeCount;
 
-            //customerReview.Evaluations = Evaluations.Select(x => x.ToModel(AbstractTypeFactory<CustomerReviewEvaluation>.TryCreateInstance())).ToList();
 
             return customerReview;
         }
@@ -77,14 +76,6 @@ namespace CustomerReviewsModule.Data.Model
             IsActive = customerReview.IsActive;
             ProductId = customerReview.ProductId;
             Rating = customerReview.Rating;
-            //customerReview.LikeCount = LikeCount;
-            //customerReview.DislikeCount = DislikeCount;
-
-            //if (customerReview.Evaluations != null)
-            //{
-            //    Evaluations = new ObservableCollection<CustomerReviewEvaluationEntity>(customerReview.Evaluations.Select(x => AbstractTypeFactory<CustomerReviewEvaluationEntity>.TryCreateInstance().FromModel(x)));
-            //}
-
 
 
             return this;
