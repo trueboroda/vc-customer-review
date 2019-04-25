@@ -12,7 +12,7 @@ angular.module('CustomerReviewsModule')
         search: { method: 'POST', url: 'api/customerReviews/search' },
         update: { method: 'PUT' },
         delete: { method: 'delete' },
-        getProductRating: { method: 'GET', url: 'api/customerReviews/rating' },
+        getProductRating: { method: 'GET', url: 'api/customerReviews/productrating', isArray: true },
         getByIds: { method: 'GET', isArray: true }
 
 

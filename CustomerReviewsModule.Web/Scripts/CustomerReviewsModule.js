@@ -49,7 +49,7 @@ angular.module(moduleTemplateName, [])
 
         //Register reviews widget inside product blade
         var itemRatingWidget = {
-            controller: 'CustomerReviewsModule.productRatingWidgetWidgetController',
+            controller: 'CustomerReviewsModule.productRatingWidgetController',
             template: 'Modules/$(CustomerReviewsModule)/Scripts/widgets/productRatingWidget.tpl.html'
         };
         widgetService.registerWidget(itemRatingWidget, 'itemDetail');

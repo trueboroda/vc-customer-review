@@ -12,14 +12,14 @@ angular.module('CustomerReviewsModule')
 
             reviewsApi.getProductRating(filter, function (data) {
                 $scope.loading = false;
-                $scope.productRating = data.rating;
+                $scope.productRating = data[0].rating;
             });
 
         }
 
         $scope.$watch("blade.itemId", function (id) {
 
-            filter.productId = id;
+            filter.productIds = id;
             if (id) refresh();
         });
     }]);
