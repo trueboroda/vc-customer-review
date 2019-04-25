@@ -11,7 +11,11 @@ namespace CustomerReviewsModule.Core.Services
 
         CustomerReview[] GetByIds(string[] ids);
 
+        //CustomerReview[] GetReviews(Expression<Func<CustomerReview, bool>> predicate);
+
+
         CustomerReview[] GetByProductId(string productId);
+        CustomerReview[] GetByProductIds(string[] productIds);
 
         CustomerReview GetById(string id);
 

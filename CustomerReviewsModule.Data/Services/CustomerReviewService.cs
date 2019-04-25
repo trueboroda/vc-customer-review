@@ -149,6 +149,22 @@ namespace CustomerReviewsModule.Data.Services
             }
         }
 
+
+        public virtual CustomerReview[] GetByProductIds(string[] productIds)
+        {
+            if (productIds == null)
+            {
+                throw new ArgumentNullException(nameof(productIds));
+            }
+
+            using (var repository = _repositoryFactory())
+            {
+                var entities = repository.CustomerReviews.Where(x => productIds.Contains(x.ProductId)).ToArray();
+                var result = entities.Select(x => x.ToModel(AbstractTypeFactory<CustomerReview>.TryCreateInstance())).ToArray();
+                return result;
+            }
+        }
+
         public virtual CustomerReview[] GetByProductId(string productId)
         {
             if (productId == null)
@@ -156,12 +172,9 @@ namespace CustomerReviewsModule.Data.Services
                 throw new ArgumentNullException(nameof(productId));
             }
 
-            using (var repository = _repositoryFactory())
-            {
-                var entities = repository.CustomerReviews.Where(x => x.ProductId == productId).ToArray();
-                var result = entities.Select(x => x.ToModel(AbstractTypeFactory<CustomerReview>.TryCreateInstance())).ToArray();
-                return result;
-            }
+            var result = GetByProductIds(new[] { productId });
+            return result;
         }
+
     }
 }

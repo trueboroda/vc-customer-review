@@ -1,3 +1,4 @@
+using System.Linq;
 using CustomerReviewsModule.Core.Model;
 using CustomerReviewsModule.Core.Services;
 using VirtoCommerce.Platform.Core.Common;
@@ -27,18 +28,21 @@ namespace CustomerReviewsModule.Data.BackgroundJobs
         public void Recalculate(string[] productIds)
         {
 
+
+            var reviews = _customerReviewService.GetByProductIds(productIds);
+            var activeReviews = reviews.Where(x => x.IsActive).ToArray();
+
             foreach (var productId in productIds)
             {
-                var reviews = _customerReviewService.GetByProductId(productId);
+                var productReviews = activeReviews.Where(x => x.ProductId == productId);
 
-                var rating = _ratingCalculator.CalcRating(reviews);
+                var rating = _ratingCalculator.CalcRating(productReviews);
 
                 var productRating = AbstractTypeFactory<ProductRating>.TryCreateInstance();
                 productRating.ProductId = productId;
                 productRating.Rating = rating;
 
                 _productRatingService.SaveProductRating(productRating);
-
             }
 
         }
