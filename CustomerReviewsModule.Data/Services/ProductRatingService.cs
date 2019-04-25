@@ -34,9 +34,16 @@ namespace CustomerReviewsModule.Data.Services
             {
                 var entities = repository.ProductRatings.Where(x => productIds.Contains(x.ProductId)).ToArray();
 
-                var result = entities.Select(x => x.ToModel(AbstractTypeFactory<ProductRating>.TryCreateInstance())).ToArray();
+                var resultList = entities.Select(x => x.ToModel(AbstractTypeFactory<ProductRating>.TryCreateInstance())).ToList();
 
-                return result;
+                foreach (var productId in productIds)
+                {
+                    if (!resultList.Any(x => x.ProductId == productId))
+                    {
+                        resultList.Add(new ProductRating() { ProductId = productId, Rating = 0.0 });
+                    }
+                }
+                return resultList.ToArray();
             }
         }
         public virtual ProductRating GetProductRating(string productId)
