@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -177,9 +176,9 @@ namespace CustomerReviewsModule.Web.Controllers.Api
 
 
         //get key for async lock
-        private string GetAsyncLockCustomerReviewKey(object cartId)
+        private string GetAsyncLockCustomerReviewKey(string reviewId)
         {
-            throw new NotImplementedException();
+            return $"CustomerReview:{reviewId}";
         }
 
 
