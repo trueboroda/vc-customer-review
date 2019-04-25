@@ -22,6 +22,23 @@ namespace CustomerReviewsModule.Data.Services
             _repositoryFactory = repositoryFactory;
         }
 
+
+        public virtual ProductRating[] GetProductsRatings(string[] productIds)
+        {
+            if (productIds == null)
+            {
+                throw new ArgumentNullException(nameof(productIds));
+            }
+
+            using (var repository = _repositoryFactory())
+            {
+                var entities = repository.ProductRatings.Where(x => productIds.Contains(x.ProductId)).ToArray();
+
+                var result = entities.Select(x => x.ToModel(AbstractTypeFactory<ProductRating>.TryCreateInstance())).ToArray();
+
+                return result;
+            }
+        }
         public virtual ProductRating GetProductRating(string productId)
         {
 
@@ -30,24 +47,9 @@ namespace CustomerReviewsModule.Data.Services
                 throw new ArgumentNullException(nameof(productId));
             }
 
-            using (var repository = _repositoryFactory())
-            {
-                var entity = repository.ProductRatings.FirstOrDefault(x => x.ProductId == productId);
+            var result = GetProductsRatings(new[] { productId }).FirstOrDefault();
 
-                var result = AbstractTypeFactory<ProductRating>.TryCreateInstance();
-
-                if (entity != null)
-                {
-                    result = entity.ToModel(result);
-                }
-                else
-                {
-                    result.ProductId = productId;
-                    result.Rating = 0.0;
-                }
-
-                return result;
-            }
+            return result;
         }
         /// <summary>
         /// enqueue hangfires job for recalculating products ratings

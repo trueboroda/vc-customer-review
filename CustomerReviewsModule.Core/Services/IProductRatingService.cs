@@ -10,6 +10,8 @@ namespace CustomerReviewsModule.Core.Services
     {
         ProductRating GetProductRating(string productId);
 
+        ProductRating[] GetProductsRatings(string[] productIds);
+
         void RecalculateProductRating(string[] productIds);
 
         void SaveProductRating(ProductRating productRating);

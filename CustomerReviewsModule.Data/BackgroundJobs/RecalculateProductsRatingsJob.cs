@@ -28,7 +28,6 @@ namespace CustomerReviewsModule.Data.BackgroundJobs
         public void Recalculate(string[] productIds)
         {
 
-
             var reviews = _customerReviewService.GetByProductIds(productIds);
             var activeReviews = reviews.Where(x => x.IsActive).ToArray();
 
@@ -46,6 +45,5 @@ namespace CustomerReviewsModule.Data.BackgroundJobs
             }
 
         }
-
     }
 }

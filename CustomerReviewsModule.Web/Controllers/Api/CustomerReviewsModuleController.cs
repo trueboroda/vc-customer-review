@@ -131,10 +131,10 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         /// <returns></returns>
         [HttpGet]
         [Route("evaluetion")]
-        [ResponseType(typeof(CustomerReviewEvaluation))]
-        public IHttpActionResult GetCustomerReviewEvaluationForCustomer(string reviewId, string customerId)
+        [ResponseType(typeof(IEnumerable<CustomerReviewEvaluation>))]
+        public IHttpActionResult GetCustomerReviewsEvaluationsForCustomer([FromUri]string[] reviewIds, [FromUri]string customerId)
         {
-            var result = _customerReviewEvaluationService.GetCustomerReviewEvaluationForCustomer(reviewId, customerId);
+            var result = _customerReviewEvaluationService.GetCustomerReviewsEvaluationsForCustomer(reviewIds, customerId);
             return Ok(result);
         }
 
@@ -162,12 +162,15 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         /// <returns></returns>
         [HttpGet]
         [Route("productrating")]
-        [ResponseType(typeof(ProductRating))]
-        public IHttpActionResult GetProductRating([FromUri]string productId)
+        [ResponseType(typeof(IEnumerable<ProductRating>))]
+        public IHttpActionResult GetProductsRatings([FromUri]string[] productIds)
         {
-            var productRating = _productRatiingService.GetProductRating(productId);
+            var productRating = _productRatiingService.GetProductsRatings(productIds);
             return Ok(productRating);
         }
+
+
+
 
 
 

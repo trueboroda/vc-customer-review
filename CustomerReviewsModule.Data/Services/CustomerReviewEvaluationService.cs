@@ -22,6 +22,30 @@ namespace CustomerReviewsModule.Data.Services
             _repositoryFactory = repositoryFactory;
         }
 
+        public virtual CustomerReviewEvaluation[] GetCustomerReviewsEvaluationsForCustomer(string[] reviewIds, string customerId)
+        {
+            if (reviewIds == null)
+            {
+                throw new ArgumentNullException(nameof(reviewIds));
+            }
+
+            if (customerId == null)
+            {
+                throw new ArgumentNullException(nameof(customerId));
+            }
+
+            using (var repository = _repositoryFactory())
+            {
+                var entities = repository.CustomerReviewEvaluations
+                    .Where(x => reviewIds.Contains(x.CustomerReviewId) && x.CustomerId == customerId).ToArray();
+
+                var result = entities.Select(x => x.ToModel(AbstractTypeFactory<CustomerReviewEvaluation>.TryCreateInstance()))
+                                        .ToArray();
+
+                return result;
+            }
+        }
+
         public virtual CustomerReviewEvaluation GetCustomerReviewEvaluationForCustomer(string reviewId, string customerId)
         {
             if (reviewId == null)
@@ -34,16 +58,9 @@ namespace CustomerReviewsModule.Data.Services
                 throw new ArgumentNullException(nameof(customerId));
             }
 
-            using (var repository = _repositoryFactory())
-            {
-                var entity = repository.CustomerReviewEvaluations
-                    .FirstOrDefault(x => x.CustomerReviewId == reviewId && x.CustomerId == customerId);
+            var result = GetCustomerReviewsEvaluationsForCustomer(new[] { reviewId }, customerId).FirstOrDefault();
 
-                var result = entity?
-                    .ToModel(AbstractTypeFactory<CustomerReviewEvaluation>.TryCreateInstance());
-
-                return result;
-            }
+            return result;
         }
 
 

@@ -7,6 +7,7 @@ namespace CustomerReviewsModule.Core.Services
     /// </summary>
     public interface ICustomerReviewEvaluationService
     {
+        CustomerReviewEvaluation[] GetCustomerReviewsEvaluationsForCustomer(string[] reviewIds, string customerId);
 
         CustomerReviewEvaluation GetCustomerReviewEvaluationForCustomer(string reviewId, string customerId);
 
