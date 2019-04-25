@@ -1,11 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using CustomerReviewsModule.Core.Model;
 using CustomerReviewsModule.Core.Services;
 using CustomerReviewsModule.Web.Security;
 using VirtoCommerce.Domain.Commerce.Model.Search;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Web.Security;
 
 namespace CustomerReviewsModule.Web.Controllers.Api
@@ -43,7 +46,7 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [ResponseType(typeof(GenericSearchResult<CustomerReview>))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewRead)]
 
-        public IHttpActionResult SearchCustomerReviews(CustomerReviewSearchCriteria criteria)
+        public IHttpActionResult SearchCustomerReviews([FromBody]CustomerReviewSearchCriteria criteria)
 
         {
 
@@ -79,7 +82,7 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [Route("")]
         [ResponseType(typeof(CustomerReview))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewCreate)]
-        public IHttpActionResult Create(CustomerReview customerReview)
+        public IHttpActionResult Create([FromBody]CustomerReview customerReview)
         {
             var review = _customerReviewService.CreateCustomerReview(customerReview);
             return Ok(review);
@@ -96,7 +99,7 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [Route("")]
         [ResponseType(typeof(void))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
-        public IHttpActionResult Update(CustomerReview[] customerReviews)
+        public IHttpActionResult Update([FromBody]CustomerReview[] customerReviews)
         {
             _customerReviewService.UpdateCustomerReviews(customerReviews);
             return StatusCode(HttpStatusCode.NoContent);
@@ -146,13 +149,16 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [Route("evaluation")]
         [ResponseType(typeof(void))]
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
-        public IHttpActionResult SaveCustomerReviewEvaluation(CustomerReviewEvaluation evaluation)
+        public async Task<IHttpActionResult> SaveCustomerReviewEvaluation([FromBody]CustomerReviewEvaluation evaluation)
         {
 
-            _customerReviewEvaluationService.SaveEvaluation(evaluation);
-
+            using (await AsyncLock.GetLockByKey(GetAsyncLockCustomerReviewKey(evaluation.CustomerReviewId)).LockAsync())
+            {
+                _customerReviewEvaluationService.SaveEvaluation(evaluation);
+            }
             return StatusCode(HttpStatusCode.NoContent);
         }
+
 
         /// <summary>
         /// Return total rating of product
@@ -170,6 +176,11 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         }
 
 
+        //get key for async lock
+        private string GetAsyncLockCustomerReviewKey(object cartId)
+        {
+            throw new NotImplementedException();
+        }
 
 
     }
