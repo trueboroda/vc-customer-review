@@ -39,11 +39,8 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         /// <returns></returns>
 
         [HttpPost]
-
         [Route("search")]
-
         [ResponseType(typeof(GenericSearchResult<CustomerReview>))]
-
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewRead)]
 
         public IHttpActionResult SearchCustomerReviews(CustomerReviewSearchCriteria criteria)
@@ -132,6 +129,7 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [HttpGet]
         [Route("evaluetion")]
         [ResponseType(typeof(IEnumerable<CustomerReviewEvaluation>))]
+        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewRead)]
         public IHttpActionResult GetCustomerReviewsEvaluationsForCustomer([FromUri]string[] reviewIds, [FromUri]string customerId)
         {
             var result = _customerReviewEvaluationService.GetCustomerReviewsEvaluationsForCustomer(reviewIds, customerId);
@@ -147,6 +145,7 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [HttpPost]
         [Route("evaluation")]
         [ResponseType(typeof(void))]
+        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
         public IHttpActionResult SaveCustomerReviewEvaluation(CustomerReviewEvaluation evaluation)
         {
 
@@ -163,14 +162,12 @@ namespace CustomerReviewsModule.Web.Controllers.Api
         [HttpGet]
         [Route("productrating")]
         [ResponseType(typeof(IEnumerable<ProductRating>))]
+        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewRead)]
         public IHttpActionResult GetProductsRatings([FromUri]string[] productIds)
         {
             var productRating = _productRatiingService.GetProductsRatings(productIds);
             return Ok(productRating);
         }
-
-
-
 
 
 
